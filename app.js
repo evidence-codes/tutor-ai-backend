@@ -4,9 +4,14 @@ const dotenv = require("dotenv")
 dotenv.config()
 const { connectDB } = require('./config/db.config');
 const mongoose = require("mongoose");
+const auth = require("./routes/auth.routes")
 
 const port = process.env.PORT || 5000
 const uri = process.env.MONGO_URI
+
+app.use(express.json())
+
+app.use('/api/auth', auth)
 
 mongoose.connect(uri)
     .then(() => {
