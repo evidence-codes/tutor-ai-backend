@@ -20,18 +20,29 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const { email, password } = req.body;
+    let user;
+    const unAuthMessage = "Invalid email/password";
+    const { email: IncomingEmail, password: IncomingPassword } = req.body;
 
     try {
-        const user = await User.findOne({ email })
-        !user && res.status(400).json('Invalid Email/Password!')
-
-        user.password !== password && res.status(400).json('Invalid Email/Password')
-
-        res.status(200).json(user)
+        user = await User.findOne({ email: IncomingEmail })
     } catch (err) {
-        res.status(500).json(err)
+        return res.status(400).json('Could not authenticate User');
     }
+
+
+    if (!Boolean(user)) return res.status(400).json(unAuthMessage)
+
+    const { password } = user;
+
+    if (!Object.is(IncomingPassword, password)) {
+        return res.status(400).json(unAuthMessage);
+    }
+
+
+    // const { password, __v, ...others } = user._doc
+
+    return res.status(200).json(user);
 }
 
 module.exports = { register, login }
