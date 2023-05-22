@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.2.0",
+    "nodemon": "^2.0.22"
+  },
+  "name": "tutor-ai",
+  "version": "1.0.0",
+  "description": "A student homework app",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tutor",
+    "student"
+  ],
+  "author": "Evidence Adejuwon",
+  "license": "ISC"
+}
