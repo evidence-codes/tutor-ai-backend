@@ -1,4 +1,5 @@
 const User = require("../models/user.model")
+const cloudinary = require("../config/cloudinary.config")
 
 const register = async (req, res) => {
     const { fullname, mobile, email, dateOfBirth, password } = req.body;
