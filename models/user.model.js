@@ -22,7 +22,12 @@ const userSchema = new mongoose.Schema(
             default: Date.now
         },
         dp: {
-            type: String,
+            public_id: {
+                type: String
+            },
+            url: {
+                type: String
+            }
         },
         password: {
             type: String,
