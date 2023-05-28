@@ -21,6 +21,9 @@ const userSchema = new mongoose.Schema(
             required: true,
             default: Date.now
         },
+        dp: {
+            type: String,
+        },
         password: {
             type: String,
             required: true
