@@ -21,6 +21,14 @@ const userSchema = new mongoose.Schema(
             required: true,
             default: Date.now
         },
+        dp: {
+            public_id: {
+                type: String
+            },
+            url: {
+                type: String
+            }
+        },
         password: {
             type: String,
             required: true

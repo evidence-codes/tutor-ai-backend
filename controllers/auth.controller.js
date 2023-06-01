@@ -1,13 +1,23 @@
 const User = require("../models/user.model")
+const cloudinary = require("../config/cloudinary.config");
+
 
 const register = async (req, res) => {
-    const { fullname, mobile, email, dateOfBirth, password } = req.body;
+    const { fullname, mobile, email, dateOfBirth, dp, password } = req.body;
+
+    const result = await cloudinary.uploader.upload(dp, {
+        folder: "profile_pics"
+    })
 
     const user = new User({
         fullname,
         mobile,
         email,
         dateOfBirth,
+        dp: {
+            public_id: result.public_id,
+            url: result.secure_url
+        },
         password
     })
 
