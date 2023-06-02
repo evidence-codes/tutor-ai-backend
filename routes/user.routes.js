@@ -1,8 +1,10 @@
 const router = require("express").Router()
-const { update } = require("../controllers/user.controller")
+const { update, setPassword, forgotPassword } = require("../controllers/user.controller")
 
 router.patch('/:id', update)
 
-router.patch('/forgot-password/:id', update)
+router.post('/:id/forgot-password', forgotPassword)
+
+router.patch('/:id/set-password', setPassword)
 
 module.exports = router;
