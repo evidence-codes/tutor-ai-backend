@@ -14,17 +14,18 @@ const errorMiddlewares = require("./middlewares/error.middleware");
 const port = process.env.PORT || 5000
 const uri = process.env.MONGO_URI
 
-app.use(express.json())
 app.use(morgan("combined", { stream: logger.stream }))
+app.use(express.json())
 app.use(errorMiddlewares.errorLogger);
 app.use(errorMiddlewares.errorHandler);
+
+
+app.use('/api/auth', auth)
+app.use('/api/questions', question)
 
 app.use('/', (req, res) => {
     res.status(404).json(errorMiddlewares.formatError("Resource Not Found"))
 })
-
-app.use('/api/auth', auth)
-app.use('/api/questions', question)
 
 
 mongoose.connect(uri)
