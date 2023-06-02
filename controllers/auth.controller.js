@@ -1,5 +1,6 @@
 const User = require("../models/user.model")
 const cloudinary = require("../config/cloudinary.config");
+const { ResourceNotFound, BadRequest } = require("../errors/httpErrors");
 
 
 const register = async (req, res) => {
@@ -21,12 +22,8 @@ const register = async (req, res) => {
         password
     })
 
-    try {
-        const savedUser = await user.save()
-        res.status(200).json(savedUser)
-    } catch (err) {
-        res.status(500).json(err)
-    }
+    const savedUser = await user.save()
+    res.status(200).json(savedUser)
 }
 
 const login = async (req, res) => {
@@ -34,20 +31,14 @@ const login = async (req, res) => {
     const unAuthMessage = "Invalid email/password";
     const { email: IncomingEmail, password: IncomingPassword } = req.body;
 
-    try {
-        user = await User.findOne({ email: IncomingEmail })
-    } catch (err) {
-        return res.status(400).json('Could not authenticate User');
-    }
 
+    user = await User.findOne({ email: IncomingEmail })
 
-    if (!Boolean(user)) return res.status(400).json(unAuthMessage)
+    if (!user) throw new ResourceNotFound("Invalid Email/Password ");
 
     const { password } = user;
 
-    if (!Object.is(IncomingPassword, password)) {
-        return res.status(400).json(unAuthMessage);
-    }
+    if (!Object.is(IncomingPassword, password)) throw new BadRequest(unAuthMessage);
 
 
     // const { password, __v, ...others } = user._doc
