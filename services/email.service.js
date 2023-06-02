@@ -3,6 +3,7 @@ const {
     addToMailingList,
     removeFromMailingList,
 } = require("../utils/emailHelpers");
+const logger = require("../config/winston.config")
 
 async function signupEmail(email, code) {
     const options = {
