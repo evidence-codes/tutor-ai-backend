@@ -1,10 +1,12 @@
-const User = require("../models/user.model")
+const User = require("../models/user.model");
+const OTP = require("../models/otp.model");
 const cloudinary = require("../config/cloudinary.config");
 const { ResourceNotFound, BadRequest } = require("../errors/httpErrors");
+const { signupEmail } = require("../services/email.service")
 
 
 const register = async (req, res) => {
-    const { fullname, mobile, email, dateOfBirth, dp, password } = req.body;
+    const { fullname, mobile, email, dateOfBirth, dp } = req.body;
 
     const result = await cloudinary.uploader.upload(dp, {
         folder: "profile_pics"
@@ -18,11 +20,18 @@ const register = async (req, res) => {
         dp: {
             public_id: result.public_id,
             url: result.secure_url
-        },
-        password
+        }
     })
 
     const savedUser = await user.save()
+
+    // Generate OTP
+    const otp = generateOTP();
+    const otpDoc = new OTP({ otp, user: user._id });
+    await otpDoc.save()
+
+    await signupEmail(email, otp)
+
     res.status(200).json(savedUser)
 }
 
@@ -44,6 +53,10 @@ const login = async (req, res) => {
     // const { password, __v, ...others } = user._doc
 
     return res.status(200).json(user);
+}
+
+function generateOTP() {
+    return `${Math.floor(Math.random() * 10)} ${Math.floor(Math.random() * 10)} ${Math.floor(Math.random() * 10)} ${Math.floor(Math.random() * 10)}`
 }
 
 module.exports = { register, login }
