@@ -73,4 +73,4 @@ function generateOTP() {
     return `${Math.floor(Math.random() * 10)} ${Math.floor(Math.random() * 10)} ${Math.floor(Math.random() * 10)} ${Math.floor(Math.random() * 10)}`
 }
 
-module.exports = { register, login }
+module.exports = { register, login, password }
