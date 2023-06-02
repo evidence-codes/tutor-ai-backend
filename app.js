@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const auth = require("./routes/auth.routes")
 const question = require("./routes/question.routes")
 const token = require("./routes/token.routes")
+const user = require("./routes/user.routes")
 const logger = require("./config/winston.config")
 const errorMiddlewares = require("./middlewares/error.middleware");
 
@@ -24,6 +25,7 @@ app.use(errorMiddlewares.errorHandler);
 app.use('/api/auth', auth)
 app.use('/api/questions', question)
 app.use('/api/token', token)
+app.use('/api/user', user)
 
 app.use('/', (req, res) => {
     res.status(404).json(errorMiddlewares.formatError("Resource Not Found"))
