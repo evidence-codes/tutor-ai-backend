@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const auth = require("./routes/auth.routes")
 const question = require("./routes/question.routes")
 const logger = require("./config/winston.config")
+const errorMiddlewares = require("./middlewares/error.middleware");
 
 
 const port = process.env.PORT || 5000
@@ -15,9 +16,16 @@ const uri = process.env.MONGO_URI
 
 app.use(express.json())
 app.use(morgan("combined", { stream: logger.stream }))
+app.use(errorMiddlewares.errorLogger);
+app.use(errorMiddlewares.errorHandler);
+
+app.use('/', (req, res) => {
+    res.status(404).json(errorMiddlewares.formatError("Resource Not Found"))
+})
 
 app.use('/api/auth', auth)
 app.use('/api/questions', question)
+
 
 mongoose.connect(uri)
     .then(() => {
