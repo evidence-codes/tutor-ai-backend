@@ -1,9 +1,13 @@
-const User = require("../models/user.model")
+const User = require("../models/user.model");
+const OTP = require("../models/otp.model");
 const cloudinary = require("../config/cloudinary.config");
+const { ResourceNotFound, BadRequest } = require("../errors/httpErrors");
+const { signupEmail } = require("../services/email.service")
+const bcrypt = require("bcrypt");
 
 
 const register = async (req, res) => {
-    const { fullname, mobile, email, dateOfBirth, dp, password } = req.body;
+    const { fullname, mobile, email, dateOfBirth, dp } = req.body;
 
     const result = await cloudinary.uploader.upload(dp, {
         folder: "profile_pics"
@@ -17,42 +21,56 @@ const register = async (req, res) => {
         dp: {
             public_id: result.public_id,
             url: result.secure_url
-        },
-        password
+        }
     })
 
-    try {
-        const savedUser = await user.save()
-        res.status(200).json(savedUser)
-    } catch (err) {
-        res.status(500).json(err)
-    }
+    const savedUser = await user.save()
+
+    // Generate OTP
+    const otp = generateOTP();
+    const otpDoc = new OTP({ otp, user: user._id });
+    await otpDoc.save()
+
+    await signupEmail(email, otp)
+
+    res.status(200).json(savedUser)
+}
+
+const password = async (req, res) => {
+    const { password } = req.body;
+
+    const salt = await bcrypt.genSalt();
+    const hash = await bcrypt.hash(password, salt);
+
+    const user = await User.findById(req.params.id)
+
+    if (!user) throw new ResourceNotFound("User account not found")
+
+    user.password = hash;
+    await user.save();
+
+    res.status(200).json({ message: "Password added successfully..." })
 }
 
 const login = async (req, res) => {
     let user;
-    const unAuthMessage = "Invalid email/password";
     const { email: IncomingEmail, password: IncomingPassword } = req.body;
 
-    try {
-        user = await User.findOne({ email: IncomingEmail })
-    } catch (err) {
-        return res.status(400).json('Could not authenticate User');
-    }
 
+    user = await User.findOne({ email: IncomingEmail })
 
-    if (!Boolean(user)) return res.status(400).json(unAuthMessage)
+    if (!user) throw new ResourceNotFound("Invalid Email/Password ");
 
     const { password } = user;
+    const compare = await bcrypt.compare(IncomingPassword, password);
 
-    if (!Object.is(IncomingPassword, password)) {
-        return res.status(400).json(unAuthMessage);
-    }
-
-
-    // const { password, __v, ...others } = user._doc
+    if (!compare) throw new ResourceNotFound("Invalid Email/Password");
 
     return res.status(200).json(user);
 }
 
-module.exports = { register, login }
+function generateOTP() {
+    return `${Math.floor(Math.random() * 10)} ${Math.floor(Math.random() * 10)} ${Math.floor(Math.random() * 10)} ${Math.floor(Math.random() * 10)}`
+}
+
+module.exports = { register, login, password }
