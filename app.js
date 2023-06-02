@@ -24,7 +24,7 @@ app.use(errorMiddlewares.errorHandler);
 
 app.use('/api/auth', auth)
 app.use('/api/questions', question)
-app.use('/api/token', token)
+app.use('/api/auth/token', token)
 app.use('/api/user', user)
 
 app.use('/', (req, res) => {
