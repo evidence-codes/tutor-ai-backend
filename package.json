@@ -9,6 +9,7 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "cloudinary": "^1.37.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
