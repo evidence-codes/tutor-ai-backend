@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express()
 const dotenv = require("dotenv")
-const morgan = require("morgan")
 dotenv.config()
 const { connectDB } = require('./config/db.config');
 const mongoose = require("mongoose");
@@ -9,16 +8,13 @@ const auth = require("./routes/auth.routes")
 const question = require("./routes/question.routes")
 const token = require("./routes/token.routes")
 const user = require("./routes/user.routes")
-const logger = require("./config/winston.config")
 const errorMiddlewares = require("./middlewares/error.middleware");
 
 
 const port = process.env.PORT || 5000
 const uri = process.env.MONGO_URI
 
-app.use(morgan("combined", { stream: logger.stream }))
 app.use(express.json())
-app.use(errorMiddlewares.errorLogger);
 app.use(errorMiddlewares.errorHandler);
 
 

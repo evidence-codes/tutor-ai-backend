@@ -4,14 +4,27 @@ const User = require("../models/user.model");
 const { signupEmail } = require("../services/email.service");
 
 const verifyOTP = async (req, res) => {
-    const { otp } = req.body;
+    try {
+        const { otp } = req.body;
+        console.log(req.params.id)
 
-    const otpDoc = await OTP.findOne({ user: req.params.id, otp })
+        const otpDoc = await OTP.findOne({ otp, user: req.params.id })
 
-    if (!otpDoc) throw new BadRequest("Wrong Code")
+        if (!otpDoc) throw new ResourceNotFound("Wrong Code")
 
-    await otpDoc.deleteOne()
-    res.status(200).json({ message: "Successful" })
+        const user = await User.findById(req.params.id)
+        if (!user) throw new ResourceNotFound('User not found!')
+
+        user.verified = true
+
+        await user.save()
+
+        await otpDoc.deleteOne()
+        res.status(200).json({ message: "Successful" })
+    } catch (err) {
+        res.status(500).json(err)
+    }
+
 }
 
 const resendOTP = async (req, res) => {

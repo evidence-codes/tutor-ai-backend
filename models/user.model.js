@@ -21,6 +21,11 @@ const userSchema = new mongoose.Schema(
             required: true,
             default: Date.now
         },
+        level: {
+            type: String,
+            enum: [null, 'Beginner', 'Elementary', 'Intermediary', 'Upper Intermediary', 'Confident'],
+            default: null
+        },
         dp: {
             public_id: {
                 type: String
@@ -31,6 +36,11 @@ const userSchema = new mongoose.Schema(
         },
         password: {
             type: String
+        },
+        verified: {
+            type: Boolean,
+            required: true,
+            default: false
         }
     }, { timestamps: true }
 )
