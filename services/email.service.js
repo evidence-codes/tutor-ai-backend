@@ -3,7 +3,6 @@ const {
     addToMailingList,
     removeFromMailingList,
 } = require("../utils/emailHelpers");
-const logger = require("../config/winston.config")
 
 async function signupEmail(email, code) {
     const options = {
@@ -50,7 +49,7 @@ async function subscribeToNewsLetter({ email, name }) {
 
     await addToMailingList(options);
 
-    logger.info(`New user subscribed to Newsletter: ${email}`);
+    // logger.info(`New user subscribed to Newsletter: ${email}`);
 }
 
 async function unsubscribeFromNewsLetter(email) {
@@ -61,7 +60,7 @@ async function unsubscribeFromNewsLetter(email) {
 
     await removeFromMailingList(options);
 
-    logger.info(`User unsubscribed from Newsletter: ${email}`);
+    // logger.info(`User unsubscribed from Newsletter: ${email}`);
 }
 
 module.exports = {
