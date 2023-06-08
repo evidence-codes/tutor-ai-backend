@@ -12,17 +12,22 @@ const update = async (req, res) => {
 }
 
 const forgotPassword = async (req, res) => {
-    const { email } = req.body;
-    const user = await User.findOne({ email })
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email })
 
-    if (!user) throw new ResourceNotFound('Email does not exist')
+        if (!user) throw new ResourceNotFound('Email does not exist')
 
-    const password = userIdGenerator()
-    user.password = password;
-    await user.save();
+        const password = userIdGenerator()
+        user.password = password;
+        await user.save();
 
-    await resetPasswordEmail(email, password)
-    res.status(200).json({ message: "Temp password sent successfully..." })
+        await resetPasswordEmail(email, password)
+        res.status(200).json({ message: "Temp password sent successfully..." })
+    } catch (err) {
+        res.status(500).json(err)
+    }
+
 }
 
 const setPassword = async (req, res) => {
