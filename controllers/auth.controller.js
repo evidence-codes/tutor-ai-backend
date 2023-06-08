@@ -29,7 +29,6 @@ const register = async (req, res) => {
 
         // Generate OTP
         const otp = String(generateOTP());
-        console.log(otp)
         const otpDoc = new OTP({ otp, user: user._id });
         await otpDoc.save()
 
