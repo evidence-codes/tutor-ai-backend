@@ -3,8 +3,8 @@ const { update, setPassword, forgotPassword } = require("../controllers/user.con
 
 router.patch('/:id', update)
 
-router.post('/:id/forgot-password', forgotPassword)
+router.post('/forgot-password/:id', forgotPassword)
 
-router.patch('/:id/set-password', setPassword)
+router.patch('/set-password/:id', setPassword)
 
 module.exports = router;
