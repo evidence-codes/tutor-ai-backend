@@ -19,7 +19,8 @@
     "mailgun.js": "^9.0.0",
     "moment": "^2.29.4",
     "mongoose": "^7.2.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "openai": "^3.2.1"
   },
   "keywords": [
     "tutor",

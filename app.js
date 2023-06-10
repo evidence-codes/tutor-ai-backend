@@ -8,6 +8,7 @@ const auth = require("./routes/auth.routes")
 const question = require("./routes/question.routes")
 const token = require("./routes/token.routes")
 const user = require("./routes/user.routes")
+const chat = require("./routes/chat.routes")
 const errorMiddlewares = require("./middlewares/error.middleware");
 
 
@@ -22,6 +23,7 @@ app.use('/api/auth', auth)
 app.use('/api/questions', question)
 app.use('/api/auth/token', token)
 app.use('/api/user', user)
+app.use('/api/chat', chat)
 
 app.use('/', (req, res) => {
     res.status(404).json(errorMiddlewares.formatError("Resource Not Found"))
