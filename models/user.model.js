@@ -26,6 +26,12 @@ const userSchema = new mongoose.Schema(
             enum: [null, 'Beginner', 'Elementary', 'Intermediary', 'Upper Intermediary', 'Confident'],
             default: null
         },
+        interests: {
+            type: Array
+        },
+        language: {
+            type: String
+        },
         dp: {
             public_id: {
                 type: String
