@@ -2,6 +2,7 @@ const express = require("express");
 const app = express()
 const dotenv = require("dotenv")
 dotenv.config()
+const cors = require("cors")
 const { connectDB } = require('./config/db.config');
 const mongoose = require("mongoose");
 const auth = require("./routes/auth.routes")
@@ -11,10 +12,14 @@ const user = require("./routes/user.routes")
 const chat = require("./routes/chat.routes")
 const errorMiddlewares = require("./middlewares/error.middleware");
 
+const corOption = {
+    origin: "*"
+}
 
 const port = process.env.PORT || 5000
 const uri = process.env.MONGO_URI
 
+app.use(cors(corOption))
 app.use(express.json())
 app.use(errorMiddlewares.errorHandler);
 
