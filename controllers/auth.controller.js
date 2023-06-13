@@ -4,6 +4,7 @@ const OTP = require("../models/otp.model");
 const { ResourceNotFound, BadRequest, BaseError } = require("../errors/httpErrors");
 const { signupEmail } = require("../services/email.service")
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 
 const register = async (req, res) => {
@@ -74,7 +75,13 @@ const login = async (req, res) => {
 
         if (!compare) throw new ResourceNotFound({ message: 'Invalid Email/Password' })
 
-        return res.status(200).json(user);
+        const payload = {
+            id: user._id
+        };
+
+        const accessToken = jwt.sign(payload, process.env.JWT_SEC);
+
+        return res.status(200).json({ user, accessToken });
     } catch (err) {
         res.status(500).json(err)
     }
