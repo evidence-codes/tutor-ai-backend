@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
         },
         level: {
             type: String,
-            enum: [null, 'Beginner', 'Elementary', 'Intermediary', 'Upper Intermediary', 'Confident'],
+            enum: [null, 'Beginner', 'Elementary', 'Intermediary', 'UpperIntermediary', 'Confident'],
             default: null
         },
         interests: {
@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema(
         },
         language: {
             type: String
+        },
+        paymentStatus: {
+            type: Boolean,
+            default: false
         },
         dp: {
             public_id: {
