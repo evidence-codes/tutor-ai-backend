@@ -1,15 +1,14 @@
-const stripe = require("stripe");
+const stripe = require("stripe")()
 const User = require("../models/user.model");
 
 const subscriptions = async (req, res) => {
-    const { stripeToken, plan } = req.body;
+    const { token, plan } = req.body;
 
     try {
-        // Create a charge using the Stripe API
         const charge = await stripe.charges.create({
             amount: calculatePlanPrice(plan),
             currency: 'usd',
-            source: stripeToken,
+            source: token,
             description: `Payment for ${plan} plan`,
         });
 
@@ -45,3 +44,5 @@ function calculatePlanPrice(plan) {
         throw new Error('Invalid plan selection');
     }
 }
+
+module.exports = { subscriptions }
