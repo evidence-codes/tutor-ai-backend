@@ -1,4 +1,6 @@
-const stripe = require("stripe")()
+require("dotenv").config();
+const { SECRET_KEY } = process.env;
+const stripe = require("stripe")(SECRET_KEY)
 const User = require("../models/user.model");
 
 const subscriptions = async (req, res) => {
