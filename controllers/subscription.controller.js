@@ -2,6 +2,7 @@ require("dotenv").config();
 const { SECRET_KEY } = process.env;
 const stripe = require("stripe")(SECRET_KEY)
 const User = require("../models/user.model");
+const paypal = require("../config/paypal.config");
 
 const subscriptions = async (req, res) => {
     const { token, plan } = req.body;
@@ -24,6 +25,10 @@ const subscriptions = async (req, res) => {
     } catch (err) {
         res.status(500).json('Payment failed!');
     }
+}
+
+const paypal = async (req, res) => {
+
 }
 
 function calculatePlanPrice(plan) {
