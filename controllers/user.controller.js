@@ -47,6 +47,20 @@ const setPassword = async (req, res) => {
     res.status(200).json({ message: "Password changed successfully..." })
 }
 
+const setLanguage = async (req, res) => {
+    const { language, interests } = req.body;
+
+    const user = await User.findById(req.params.id);
+    if (!user) throw new ResourceNotFound('User does not exist');
+
+    user.language = language;
+    user.interests = interests;
+
+    await user.save();
+
+    res.status(200).json({ message: "User Language and interests added successfully" })
+}
+
 const userIdGenerator = () => {
     let characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     let randomID = '';
@@ -56,4 +70,4 @@ const userIdGenerator = () => {
     return randomID;
 }
 
-module.exports = { update, forgotPassword, setPassword }
+module.exports = { update, forgotPassword, setPassword, setLanguage }
