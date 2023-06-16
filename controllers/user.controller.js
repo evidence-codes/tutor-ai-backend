@@ -1,14 +1,19 @@
 const User = require("../models/user.model")
 const bcrypt = require("bcrypt")
 const { ResourceNotFound, BadRequest } = require("../errors/httpErrors")
+// const cloudinary = require("../config/cloudinary.config");
 const { resetPasswordEmail } = require("../services/email.service")
 
 const update = async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, {
+            $set: req.body
+        }, { new: true })
+        res.status(200).json(user)
+    } catch (err) {
+        res.status(500).json(err)
+    }
 
-    const user = await User.findByIdAndUpdate(req.params.id, {
-        $set: req.body
-    }, { new: true })
-    res.status(200).json(user)
 }
 
 const forgotPassword = async (req, res) => {
@@ -31,34 +36,87 @@ const forgotPassword = async (req, res) => {
 }
 
 const setPassword = async (req, res) => {
-    const { temp, password } = req.body;
+    try {
+        const { temp, password } = req.body;
 
-    const salt = await bcrypt.genSalt();
-    const hash = await bcrypt.hash(password, salt);
+        const salt = await bcrypt.genSalt();
+        const hash = await bcrypt.hash(password, salt);
 
-    const user = await User.findById(req.params.id)
-    if (!user) throw new ResourceNotFound('User does not exist')
+        const user = await User.findById(req.params.id)
+        if (!user) throw new ResourceNotFound('User does not exist')
 
-    if (temp !== user.password) throw new BadRequest('Old password does not match')
+        if (temp !== user.password) throw new BadRequest('Old password does not match')
 
-    user.password = hash;
-    await user.save();
+        user.password = hash;
+        await user.save();
 
-    res.status(200).json({ message: "Password changed successfully..." })
+        res.status(200).json({ message: "Password changed successfully..." })
+    } catch (err) {
+        res.status(500).json(err)
+    }
+
+}
+
+const changePassword = async (req, res) => {
+    try {
+        const { old, password } = req.body;
+
+        const salt = await bcrypt.genSalt();
+        const hash = await bcrypt.hash(password, salt);
+
+        const user = await User.findById(req.params.id)
+        if (!user) throw new ResourceNotFound('User does not exist')
+
+        // if (temp !== user.password) throw new BadRequest('Old password does not match')
+        const compare = await bcrypt.compare(old, user.password)
+        if (!compare) throw new BadRequest('Old password does not match!')
+
+        user.password = hash;
+        await user.save();
+
+        res.status(200).json({ message: "Password changed successfully..." })
+    } catch (err) {
+        res.status(500).json(err)
+    }
+
 }
 
 const setLanguage = async (req, res) => {
-    const { language, interests } = req.body;
+    try {
+        const { language, interests } = req.body;
 
-    const user = await User.findById(req.params.id);
-    if (!user) throw new ResourceNotFound('User does not exist');
+        const user = await User.findById(req.params.id);
+        if (!user) throw new ResourceNotFound('User does not exist');
 
-    user.language = language;
-    user.interests = interests;
+        user.language = language;
+        user.interests = interests;
 
-    await user.save();
+        await user.save();
 
-    res.status(200).json({ message: "User Language and interests added successfully" })
+        res.status(200).json({ message: "User Language and interests added successfully" })
+    } catch (err) {
+        res.status(500).json(err)
+    }
+
+}
+
+const changeDp = async (req, res) => {
+    // try {
+    //     const {dp } = req.body;
+    //     const user = await User.findById(req.params.id);
+    //     if (!user) throw new ResourceNotFound('User does not exist');
+    //      const result = await cloudinary.uploader.upload(dp, {
+    //         folder: "profile_pics"
+    //     })
+    //     user.dp = {
+    //             public_id: result.public_id,
+    //             url: result.secure_url
+    //         }
+    //         await user.save()
+    //         res.status(200).json({ message: "User picture updated successfully!"})
+    // } catch (err) {
+    //     res.status(500).json(err)
+    // }
 }
 
 const userIdGenerator = () => {
@@ -70,4 +128,4 @@ const userIdGenerator = () => {
     return randomID;
 }
 
-module.exports = { update, forgotPassword, setPassword, setLanguage }
+module.exports = { update, forgotPassword, setPassword, changePassword, setLanguage, changeDp }
