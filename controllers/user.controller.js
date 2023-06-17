@@ -1,7 +1,7 @@
 const User = require("../models/user.model")
 const bcrypt = require("bcrypt")
 const { ResourceNotFound, BadRequest } = require("../errors/httpErrors")
-// const cloudinary = require("../config/cloudinary.config");
+const cloudinary = require("../config/cloudinary.config");
 const { resetPasswordEmail } = require("../services/email.service")
 
 const update = async (req, res) => {
@@ -50,7 +50,7 @@ const setPassword = async (req, res) => {
         user.password = hash;
         await user.save();
 
-        res.status(200).json({ message: "Password changed successfully..." })
+        res.status(200).json({ message: "Password changed successfully...", password: hash })
     } catch (err) {
         res.status(500).json(err)
     }
@@ -74,7 +74,7 @@ const changePassword = async (req, res) => {
         user.password = hash;
         await user.save();
 
-        res.status(200).json({ message: "Password changed successfully..." })
+        res.status(200).json({ message: "Password changed successfully...", password: hash })
     } catch (err) {
         res.status(500).json(err)
     }
@@ -101,22 +101,22 @@ const setLanguage = async (req, res) => {
 }
 
 const changeDp = async (req, res) => {
-    // try {
-    //     const {dp } = req.body;
-    //     const user = await User.findById(req.params.id);
-    //     if (!user) throw new ResourceNotFound('User does not exist');
-    //      const result = await cloudinary.uploader.upload(dp, {
-    //         folder: "profile_pics"
-    //     })
-    //     user.dp = {
-    //             public_id: result.public_id,
-    //             url: result.secure_url
-    //         }
-    //         await user.save()
-    //         res.status(200).json({ message: "User picture updated successfully!"})
-    // } catch (err) {
-    //     res.status(500).json(err)
-    // }
+    try {
+        const {dp } = req.body;
+        const user = await User.findById(req.params.id);
+        if (!user) throw new ResourceNotFound('User does not exist');
+         const result = await cloudinary.uploader.upload(dp, {
+            folder: "profile_pics"
+        })
+        user.dp = {
+                public_id: result.public_id,
+                url: result.secure_url
+            }
+            await user.save()
+            res.status(200).json({ message: "User picture updated successfully!", dp_url: result.secure_url })
+    } catch (err) {
+        res.status(500).json(err)
+    }
 }
 
 const userIdGenerator = () => {
