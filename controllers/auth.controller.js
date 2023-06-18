@@ -57,7 +57,13 @@ const password = async (req, res) => {
     user.password = hash;
     await user.save();
 
-    res.status(200).json({ message: "Password added successfully...", password: hash })
+    const payload = {
+        id: user._id
+    };
+
+    const accessToken = jwt.sign(payload, process.env.JWT_SEC);
+
+    res.status(200).json({ message: "Password added successfully...", password: hash, accessToken })
 }
 
 const login = async (req, res) => {
