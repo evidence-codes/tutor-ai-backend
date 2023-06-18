@@ -1,6 +1,6 @@
 const User = require("../models/user.model");
 const OTP = require("../models/otp.model");
-// const cloudinary = require("../config/cloudinary.config");
+const cloudinary = require("../config/cloudinary.config");
 const { ResourceNotFound, BadRequest, BaseError } = require("../errors/httpErrors");
 const { signupEmail } = require("../services/email.service")
 const bcrypt = require("bcrypt");
@@ -11,19 +11,19 @@ const register = async (req, res) => {
     try {
         const { fullname, mobile, email, dateOfBirth, dp } = req.body;
 
-        // const result = await cloudinary.uploader.upload(dp, {
-        //     folder: "profile_pics"
-        // })
+        const result = await cloudinary.uploader.upload(dp, {
+            folder: "profile_pics"
+        })
 
         const user = new User({
             fullname,
             mobile,
             email,
             dateOfBirth,
-            // dp: {
-            //     public_id: result.public_id,
-            //     url: result.secure_url
-            // }
+            dp: {
+                public_id: result.public_id,
+                url: result.secure_url
+            }
         })
 
         const savedUser = await user.save()
