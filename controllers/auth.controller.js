@@ -37,6 +37,7 @@ const register = async (req, res) => {
 
         res.status(200).json(savedUser)
     } catch (err) {
+        console.log(err)
         res.status(500).json(err)
     }
 
