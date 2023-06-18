@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema(
         language: {
             type: String
         },
+        study_target: {
+            type: Number,
+        },
         paymentStatus: {
             type: Boolean,
             default: false
