@@ -83,12 +83,13 @@ const changePassword = async (req, res) => {
 
 const setLanguage = async (req, res) => {
     try {
-        const { language, interests } = req.body;
+        const { language, study_target, interests } = req.body;
 
         const user = await User.findById(req.params.id);
         if (!user) throw new ResourceNotFound('User does not exist');
 
         user.language = language;
+        user.study_target = study_target;
         user.interests = interests;
 
         await user.save();
