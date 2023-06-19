@@ -4,7 +4,6 @@ const request = async (req, res) => {
 
     try {
         const { message } = req.body
-        console.log(message)
 
         const response = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",

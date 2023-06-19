@@ -6,7 +6,6 @@ const { signupEmail } = require("../services/email.service");
 const verifyOTP = async (req, res) => {
     try {
         const { otp } = req.body;
-        console.log(req.params.id)
 
         const otpDoc = await OTP.findOne({ otp, user: req.params.id })
 
