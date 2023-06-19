@@ -115,7 +115,10 @@ const changeDp = async (req, res) => {
                 url: result.secure_url
             }
             await user.save()
-            res.status(200).json({ message: "User picture updated successfully!", dp_url: result.secure_url })
+            res.status(200).json({ message: "User picture updated successfully!", dp: {
+                public_id: result.public_id,
+                url: result.secure_url
+            } })
     } catch (err) {
         res.status(500).json(err)
     }
