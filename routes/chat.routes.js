@@ -1,6 +1,6 @@
 const router = require("express").Router()
-const request = require('../controllers/request.controller')
+const chat = require('../controllers/chat.controller')
 
-router.post('/', request)
+router.post('/', chat)
 
 module.exports = router;
