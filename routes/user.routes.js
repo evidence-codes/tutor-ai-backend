@@ -10,7 +10,7 @@ router.patch('/set-password/:id', setPassword)
 
 router.patch('/change-password/:id', changePassword)
 
-router.post('/update-level/:id', updateLevel)
+router.patch('/update-level/:id', updateLevel)
 
 router.post('/language/:id', setLanguage)
 
