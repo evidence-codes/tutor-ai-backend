@@ -16,7 +16,7 @@ const subscriptions = async (req, res) => {
         });
 
         // Update the user's payment status and level in the database
-        await User.findByIdAndUpdate(req.user._id, {
+        await User.findByIdAndUpdate(req.user.id, {
             level: plan,
             paymentStatus: true,
         });

@@ -1,6 +1,6 @@
 const openai = require("../config/openai.config")
 
-const request = async (req, res) => {
+const chat = async (req, res) => {
 
     try {
         const { message } = req.body
@@ -16,4 +16,4 @@ const request = async (req, res) => {
     }
 }
 
-module.exports = request;
+module.exports = chat;
