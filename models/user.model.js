@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
         },
         level: {
             type: String,
-            enum: [null, 'Beginner', 'Elementary', 'Intermediary', 'UpperIntermediary', 'Confident'],
+            enum: [null, 'Beginner', 'Pre-Intermediate', 'Intermediate', 'Upper-Intermediate', 'Confident'],
             default: null
         },
         interests: {
