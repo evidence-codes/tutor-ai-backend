@@ -42,14 +42,14 @@ const resendOTP = async (req, res) => {
 
         await signupEmail(user.email, newOTP)
         res.status(200).json({ message: "Resend OTP successful.." })
+    } else {
+        const otp = generateOTP();
+        const otpDoc = new OTP({ otp, user: user._id });
+        await otpDoc.save()
+
+        await signupEmail(user.email, otp)
+        res.status(200).json({ message: "New OTP generated successfully" })
     }
-
-    const otp = generateOTP();
-    const otpDoc = new OTP({ otp, user: user._id });
-    await otpDoc.save()
-
-    await signupEmail(user.email, otp)
-    res.status(200).json({ message: "New OTP generated successfully" })
 }
 
 function generateOTP() {
