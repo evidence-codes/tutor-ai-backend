@@ -1,36 +1,37 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
 
 const questionSchema = new mongoose.Schema(
     {
         question: {
             type: String,
-            required: true
+            required: true,
         },
         option_a: {
             type: String,
-            required: true
+            required: true,
         },
         option_b: {
             type: String,
-            required: true
+            required: true,
         },
         option_c: {
             type: String,
-            required: true
+            required: true,
         },
         option_d: {
             type: String,
-            required: true
+            required: true,
         },
         option_e: {
-            type: String
+            type: String,
         },
         answer: {
             type: String,
-            required: true
-        }
-    }, { timestamps: true }
-)
+            required: true,
+        },
+    },
+    { timestamps: true },
+);
 
 const Question = mongoose.model('Question', questionSchema);
 

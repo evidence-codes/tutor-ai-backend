@@ -1,5 +1,5 @@
-const { ResourceNotFound } = require("../errors/httpErrors");
-const User = require("../models/user.model")
+const { ResourceNotFound } = require('../errors/httpErrors');
+const User = require('../models/user.model');
 
 const updateLevel = async (req, res) => {
     try {
@@ -12,11 +12,10 @@ const updateLevel = async (req, res) => {
 
         await user.save();
 
-        res.status(200).json({ message: "User Level updated successfully" })
+        res.status(200).json({ message: 'User Level updated successfully' });
     } catch (err) {
-        res.status(500).json(err)
+        res.status(500).json(err);
     }
+};
 
-}
-
-module.exports = { updateLevel }
+module.exports = { updateLevel };

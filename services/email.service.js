@@ -2,13 +2,13 @@ const {
     sendMail,
     addToMailingList,
     removeFromMailingList,
-} = require("../utils/emailHelpers");
+} = require('../utils/emailHelpers');
 
 async function signupEmail(email, code) {
     const options = {
         to: email,
-        subject: "Your one time password for Tutor AI",
-        template: "signup",
+        subject: 'Your one time password for Tutor AI',
+        template: 'signup',
         variables: {
             code,
         },
@@ -20,8 +20,8 @@ async function signupEmail(email, code) {
 async function resetPasswordEmail(email, token) {
     const options = {
         to: email,
-        subject: "Reset Password",
-        template: "forgot-password",
+        subject: 'Reset Password',
+        template: 'forgot-password',
         variables: {
             token,
         },
@@ -31,8 +31,8 @@ async function resetPasswordEmail(email, token) {
 async function welcomeNotification({ email, name }) {
     const options = {
         to: email,
-        subject: "Welcome to Grolite",
-        template: "welcome",
+        subject: 'Welcome to Grolite',
+        template: 'welcome',
         variables: {
             name,
         },
@@ -44,7 +44,7 @@ async function subscribeToNewsLetter({ email, name }) {
     const options = {
         email,
         name,
-        listName: "newsletter",
+        listName: 'newsletter',
     };
 
     await addToMailingList(options);
@@ -55,7 +55,7 @@ async function subscribeToNewsLetter({ email, name }) {
 async function unsubscribeFromNewsLetter(email) {
     const options = {
         email,
-        listName: "newsletter",
+        listName: 'newsletter',
     };
 
     await removeFromMailingList(options);
@@ -68,5 +68,5 @@ module.exports = {
     resetPasswordEmail,
     welcomeNotification,
     subscribeToNewsLetter,
-    unsubscribeFromNewsLetter
-}  
+    unsubscribeFromNewsLetter,
+};

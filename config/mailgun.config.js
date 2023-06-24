@@ -1,10 +1,10 @@
-const Mailgun = require("mailgun.js");
-const formData = require("form-data");
+const Mailgun = require('mailgun.js');
+const formData = require('form-data');
 const mailgun = new Mailgun(formData);
-require("dotenv").config();
+require('dotenv').config();
 
 const client = mailgun.client({
-    username: "api",
+    username: 'api',
     key: process.env.MAILGUN_API_KEY,
 });
 
