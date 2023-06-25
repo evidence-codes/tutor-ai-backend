@@ -1,8 +1,8 @@
-require("dotenv").config();
+require('dotenv').config();
 const { SECRET_KEY } = process.env;
-const stripe = require("stripe")(SECRET_KEY)
-const User = require("../models/user.model");
-const paypal = require("../config/paypal.config");
+const stripe = require('stripe')(SECRET_KEY);
+const User = require('../models/user.model');
+const paypal = require('../config/paypal.config');
 
 const subscriptions = async (req, res) => {
     const { token, plan } = req.body;
@@ -14,10 +14,10 @@ const subscriptions = async (req, res) => {
             source: token,
             description: `Payment for ${plan} plan`,
         });
+        console.log(charge);
 
         // Update the user's payment status and level in the database
         await User.findByIdAndUpdate(req.user.id, {
-            level: plan,
             paymentStatus: true,
         });
 
@@ -25,7 +25,7 @@ const subscriptions = async (req, res) => {
     } catch (err) {
         res.status(500).json('Payment failed!');
     }
-}
+};
 
 const paypalOption = async (req, res) => {
     const { amount, currency, description } = req.body;
@@ -51,15 +51,17 @@ const paypalOption = async (req, res) => {
     };
 
     try {
-        const payment = await paypal.payment.create(createPayment);
+        const payment = paypal.payment.create(createPayment);
 
         // Redirect the user to PayPal for payment approval
-        res.status(200).json(payment.links.find(link => link.rel === 'approval_url').href);
+        res.status(200).json(
+            payment.links.find(link => link.rel === 'approval_url').href,
+        );
     } catch (error) {
         // Handle error response
         res.status(500).json('Payment failed!');
     }
-}
+};
 
 const paypalCallback = async (req, res) => {
     const { paymentId, PayerID } = req.query;
@@ -69,12 +71,14 @@ const paypalCallback = async (req, res) => {
     };
 
     try {
-        const paymentExecution = await paypal.payment.execute(paymentId, executePayment);
+        const paymentExecution = paypal.payment.execute(
+            paymentId,
+            executePayment,
+        );
 
         // Update the user's payment status and level in the database
         await User.findByIdAndUpdate(req.user._id, {
             paymentStatus: true,
-            level: paymentExecution.transactions[0].description,
         });
 
         // Payment successful, handle success response
@@ -83,27 +87,21 @@ const paypalCallback = async (req, res) => {
         // Handle error response
         res.status(500).json('Payment failed!');
     }
-}
+};
 
 function calculatePlanPrice(plan) {
-    // Set the prices for each plan
     const planPrices = {
-        Beginner: 10,
-        Elementary: 20,
-        Intermediary: 30,
-        UpperIntermediary: 40,
-        Confident: 50,
+        plan_1: 16,
+        plan_2: 40.8,
+        plan_3: 72,
     };
 
-    // Retrieve the price for the selected plan
     const price = planPrices[plan];
-
-
     if (price) {
-        return price * 100; // Convert to the smallest currency unit (in cents)
+        return price * 100;
     } else {
         throw new Error('Invalid plan selection');
     }
 }
 
-module.exports = { subscriptions, paypalOption, paypalCallback }
+module.exports = { subscriptions, paypalOption, paypalCallback };

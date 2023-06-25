@@ -1,62 +1,70 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
     {
         fullname: {
             type: String,
-            required: true
+            required: true,
         },
         mobile: {
             type: String,
             required: true,
-            unique: false
+            unique: false,
         },
         email: {
             type: String,
             required: true,
-            unique: true
+            unique: true,
         },
         dateOfBirth: {
             type: Date,
             required: true,
-            default: Date.now
+            default: Date.now,
         },
         level: {
             type: String,
-            enum: [null, 'Beginner', 'Pre-Intermediate', 'Intermediate', 'Upper-Intermediate', 'Confident'],
-            default: null
+            enum: [
+                null,
+                'Beginner',
+                'Pre-Intermediate',
+                'Intermediate',
+                'Upper-Intermediate',
+                'Confident',
+            ],
+            default: null,
         },
         interests: {
-            type: Array
+            type: Array,
         },
         language: {
-            type: String
+            type: String,
         },
         study_target: {
             type: Number,
         },
         paymentStatus: {
             type: Boolean,
-            default: false
+            default: false,
         },
         dp: {
             public_id: {
-                type: String
+                type: String,
             },
             url: {
-                type: String
-            }
+                type: String,
+            },
         },
         password: {
-            type: String
+            type: String,
         },
         verified: {
             type: Boolean,
             required: true,
-            default: false
-        }
-    }, { timestamps: true }
-)
+            default: false,
+        },
+    },
+    { timestamps: true },
+);
 
 const User = mongoose.model('User', userSchema);
 

@@ -1,6 +1,6 @@
-const emailClient = require("../config/mailgun.config");
-const moment = require("moment");
-require("dotenv").config();
+const emailClient = require('../config/mailgun.config');
+const moment = require('moment');
+require('dotenv').config();
 const domain = process.env.MAILGUN_DOMAIN;
 const sender = `Tutor AI <${process.env.MAILGUN_SENDER_EMAIL}>`;
 
@@ -10,7 +10,7 @@ async function sendMail({ to, template, subject, variables = {} }) {
         to,
         subject,
         template,
-        "t:variables": JSON.stringify(variables),
+        't:variables': JSON.stringify(variables),
     };
 
     return emailClient.messages.create(domain, messageData);
@@ -22,8 +22,8 @@ async function scheduleMail({ to, template, subject, variables = {}, time }) {
         to,
         subject,
         template,
-        "o:deliverytime": moment(time).toDate.toUTCString(),
-        "t:variables": JSON.stringify(variables),
+        'o:deliverytime': moment(time).toDate.toUTCString(),
+        't:variables': JSON.stringify(variables),
     };
 
     return emailClient.messages.create(domain, messageData);
@@ -32,12 +32,15 @@ async function scheduleMail({ to, template, subject, variables = {}, time }) {
 async function addToMailingList({ email, listName, name }) {
     const listAddress = `${listName}@${domain}`;
 
-    const newMember = await emailClient.lists.members.createMember(listAddress, {
-        address: email,
-        name,
-        subscribed: true,
-        upsert: "yes",
-    });
+    const newMember = await emailClient.lists.members.createMember(
+        listAddress,
+        {
+            address: email,
+            name,
+            subscribed: true,
+            upsert: 'yes',
+        },
+    );
 
     return newMember;
 }
@@ -57,6 +60,5 @@ module.exports = {
     sendMail,
     scheduleMail,
     addToMailingList,
-    removeFromMailingList
-}
-
+    removeFromMailingList,
+};
