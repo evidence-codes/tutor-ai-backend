@@ -4,6 +4,24 @@ const stripe = require('stripe')(SECRET_KEY);
 const User = require('../models/user.model');
 const paypal = require('../config/paypal.config');
 
+const paymentIntent = async (req, res) => {
+    const { plan } = req.body;
+
+    try {
+        const payment_intent = await stripe.paymentIntents.create({
+            amount: calculatePlanPrice(plan),
+            currency: 'usd',
+            automatic_payment_methods: {
+                enabled: true,
+            },
+        });
+
+        res.status(200).json(payment_intent?.client_secret);
+    } catch (err) {
+        res.status(500).json(err?.message || 'An Error Occured!');
+    }
+};
+
 const subscriptions = async (req, res) => {
     const { token, plan } = req.body;
 
@@ -23,7 +41,7 @@ const subscriptions = async (req, res) => {
 
         res.status(200).json('Payment successful!');
     } catch (err) {
-        res.status(500).json('Payment failed!');
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -59,7 +77,7 @@ const paypalOption = async (req, res) => {
         );
     } catch (error) {
         // Handle error response
-        res.status(500).json('Payment failed!');
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -85,7 +103,7 @@ const paypalCallback = async (req, res) => {
         res.status(200).json('Payment successful!');
     } catch (error) {
         // Handle error response
-        res.status(500).json('Payment failed!');
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -98,10 +116,10 @@ function calculatePlanPrice(plan) {
 
     const price = planPrices[plan];
     if (price) {
-        return price * 100;
+        return Math.floor(price * 100);
     } else {
         throw new Error('Invalid plan selection');
     }
 }
 
-module.exports = { subscriptions, paypalOption, paypalCallback };
+module.exports = { paymentIntent, subscriptions, paypalOption, paypalCallback };

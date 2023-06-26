@@ -40,36 +40,40 @@ const register = async (req, res) => {
 
         res.status(200).json(savedUser);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
 const password = async (req, res) => {
-    const { password } = req.body;
+    try {
+        const { password } = req.body;
 
-    const salt = await bcrypt.genSalt();
-    const hash = await bcrypt.hash(password, salt);
+        const salt = await bcrypt.genSalt();
+        const hash = await bcrypt.hash(password, salt);
 
-    const user = await User.findById(req.params.id);
+        const user = await User.findById(req.params.id);
 
-    if (!user) throw new ResourceNotFound('User account not found');
+        if (!user) throw new ResourceNotFound('User account not found');
 
-    if (!user.verified) throw new BadRequest('User not verified');
+        if (!user.verified) throw new BadRequest('User not verified');
 
-    user.password = hash;
-    await user.save();
+        user.password = hash;
+        await user.save();
 
-    const payload = {
-        id: user._id,
-    };
+        const payload = {
+            id: user._id,
+        };
 
-    const accessToken = jwt.sign(payload, process.env.JWT_SEC);
+        const accessToken = jwt.sign(payload, process.env.JWT_SEC);
 
-    res.status(200).json({
-        message: 'Password added successfully...',
-        password: hash,
-        accessToken,
-    });
+        res.status(200).json({
+            message: 'Password added successfully...',
+            password: hash,
+            accessToken,
+        });
+    } catch (err) {
+        res.status(500).json(err?.message || 'An Error Occured!');
+    }
 };
 
 const login = async (req, res) => {
@@ -95,7 +99,7 @@ const login = async (req, res) => {
 
         return res.status(200).json({ user, accessToken });
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 

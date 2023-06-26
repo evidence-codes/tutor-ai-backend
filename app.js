@@ -63,12 +63,10 @@ mongoose
         useUnifiedTopology: true,
     })
     .then(() => {
-        console.log('Database connection successful!');
+        server.listen(port, async () => {
+            console.log(`Server is listening on port ${port}`);
+        });
     })
     .catch(err => {
         console.log(err);
     });
-
-server.listen(port, async () => {
-    console.log(`Server is listening on port ${port}`);
-});
