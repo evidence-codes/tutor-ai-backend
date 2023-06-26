@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const errorMiddlewares = require('./middlewares/error.middleware');
 const http = require('http');
 const { Server } = require('socket.io');
+const engine = require('consolidate');
 const openai = require('./config/openai.config');
 
 const auth = require('./routes/auth.routes');
@@ -18,6 +19,10 @@ const payment = require('./routes/payment.routes');
 
 const port = process.env.PORT || 5000;
 const uri = process.env.MONGO_URI;
+
+app.engine('ejs', engine.ejs);
+app.set('views', './views');
+app.set('view engine', 'ejs');
 
 app.use(express.json({ limit: '15mb' }));
 app.use(express.urlencoded({ limit: '15mb', extended: true }));
@@ -46,7 +51,7 @@ app.use('/', (req, res) => {
 io.on('connection', socket => {
     console.log(`User ${socket.id} Connected!`);
 
-    socket.on(' ', message => {
+    socket.on('conversation', message => {
         setTimeout(() => {
             socket.emit('conversation', message);
         }, [800]);

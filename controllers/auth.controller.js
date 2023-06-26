@@ -103,10 +103,10 @@ const login = async (req, res) => {
     }
 };
 
-function generateOTP() {
+const generateOTP = () => {
     return `${Math.floor(Math.random() * 10)} ${Math.floor(
         Math.random() * 10,
     )} ${Math.floor(Math.random() * 10)} ${Math.floor(Math.random() * 10)}`;
-}
+};
 
 module.exports = { register, login, password };

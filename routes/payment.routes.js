@@ -1,18 +1,16 @@
 const router = require('express').Router();
 const {
-    paymentIntent,
-    subscriptions,
-    paypalOption,
-    paypalCallback,
-} = require('../controllers/subscription.controller');
+    stripeIntent,
+    paypalIntent,
+    paypalCancel,
+    paypalSuccess,
+} = require('../controllers/payment.controller');
 const auth = require('../middlewares/auth.middleware');
 
-router.post('/payment-intent', auth, paymentIntent);
+router.post('/stripe-intent', auth, stripeIntent);
 
-router.post('/cards', auth, subscriptions);
-
-router.post('/paypal-payment', auth, paypalOption);
-
-router.get('/paypal-callback', auth, paypalCallback);
+router.post('/paypal-intent', auth, paypalIntent);
+router.get('/paypal-cancel', paypalCancel);
+router.get('/paypal-success', paypalSuccess);
 
 module.exports = router;
