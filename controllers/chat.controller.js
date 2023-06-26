@@ -14,7 +14,7 @@ const chat = async (req, res) => {
     } catch (err) {
         console.log('ERROR FROM GPT');
         console.log(err);
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 
     // try {

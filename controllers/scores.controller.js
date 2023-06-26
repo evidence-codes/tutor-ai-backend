@@ -12,9 +12,9 @@ const updateLevel = async (req, res) => {
 
         await user.save();
 
-        res.status(200).json({ message: 'User Level updated successfully' });
+        res.status(200).json('User Level updated successfully');
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 

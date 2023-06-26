@@ -15,7 +15,7 @@ const update = async (req, res) => {
         );
         res.status(200).json(user);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -31,9 +31,9 @@ const forgotPassword = async (req, res) => {
         await user.save();
 
         await resetPasswordEmail(email, password);
-        res.status(200).json({ message: 'Temp password sent successfully...' });
+        res.status(200).json('Temp password sent successfully...');
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -58,7 +58,7 @@ const setPassword = async (req, res) => {
             password: hash,
         });
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -84,7 +84,7 @@ const changePassword = async (req, res) => {
             password: hash,
         });
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -101,11 +101,9 @@ const setLanguage = async (req, res) => {
 
         await user.save();
 
-        res.status(200).json({
-            message: 'User Language and interests added successfully',
-        });
+        res.status(200).json('User Language and interests added successfully');
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -131,7 +129,7 @@ const changeDp = async (req, res) => {
             },
         });
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
