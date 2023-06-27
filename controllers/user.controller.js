@@ -133,6 +133,22 @@ const changeDp = async (req, res) => {
     }
 };
 
+const increaseLessons = async (req, res) => {
+    const { no_of_lessons } = req.body;
+    try {
+        const user = await User.findById(req.user._id)
+        if (!user) throw new ResourceNotFound('User does not exist')
+
+        user.payment = user.payment + no_of_lessons
+        await user.save()
+        res.status(200).json({
+            message: "User's lesson has been increased "
+        })
+    } catch (err) {
+        res.status(500).json(err?.message || 'Something went Wrong')
+    }
+}
+
 const userIdGenerator = () => {
     let characters =
         '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -152,4 +168,5 @@ module.exports = {
     changePassword,
     setLanguage,
     changeDp,
+    increaseLessons
 };
