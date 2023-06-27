@@ -149,6 +149,16 @@ const increaseLessons = async (req, res) => {
     }
 }
 
+const deletes = async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.user._id)
+        if (!user) throw new ResourceNotFound('User does not exist')
+        res.status(200).json({ message: 'User deleted...' })
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}
+
 const userIdGenerator = () => {
     let characters =
         '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -168,5 +178,6 @@ module.exports = {
     changePassword,
     setLanguage,
     changeDp,
-    increaseLessons
+    increaseLessons,
+    deletes
 };

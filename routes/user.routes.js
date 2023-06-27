@@ -9,6 +9,7 @@ const {
     changePassword,
     changeDp,
     increaseLessons,
+    deletes,
 } = require('../controllers/user.controller');
 
 router.patch('/:id', update);
@@ -26,5 +27,7 @@ router.post('/language/:id', setLanguage);
 router.patch('/update-pic/:id', changeDp);
 
 router.patch('/increase', auth, increaseLessons)
+
+router.delete('/delete', auth, deletes)
 
 module.exports = router;
