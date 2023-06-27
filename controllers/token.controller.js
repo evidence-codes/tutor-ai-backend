@@ -57,6 +57,19 @@ const resendOTP = async (req, res) => {
     }
 };
 
+const parentalControl = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id)
+        if (!user) throw new ResourceNotFound('User not found')
+        const pc = generateOTP();
+        user.parental_control = pc;
+        await user.save()
+        res.status(200).json({ message: 'Pin sent successfully' })
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}
+
 function generateOTP() {
     return `${Math.floor(Math.random() * 10)} ${Math.floor(
         Math.random() * 10,
@@ -66,4 +79,5 @@ function generateOTP() {
 module.exports = {
     verifyOTP,
     resendOTP,
+    parentalControl
 };
