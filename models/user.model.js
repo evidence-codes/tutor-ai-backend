@@ -42,9 +42,12 @@ const userSchema = new mongoose.Schema(
         study_target: {
             type: Number,
         },
-        paymentStatus: {
-            type: Boolean,
-            default: false,
+        payment: {
+            type: Number,
+            default: 0
+        },
+        lessons: {
+            type: Array
         },
         dp: {
             public_id: {
