@@ -57,6 +57,9 @@ const userSchema = new mongoose.Schema(
                 type: String,
             },
         },
+        parental_control: {
+            type: String
+        },
         password: {
             type: String,
         },

@@ -12,24 +12,47 @@ const jwt = require('jsonwebtoken');
 
 const register = async (req, res) => {
     try {
-        const { fullname, mobile, email, dateOfBirth, dp } = req.body;
+        const { fullname, mobile, email, dateOfBirth, dp, parental_control } = req.body;
 
-        const result = await cloudinary.uploader.upload(dp, {
-            folder: 'profile_pics',
-        });
+        // const result = await cloudinary.uploader.upload(dp, {
+        //     folder: 'profile_pics',
+        // });
 
         const user = new User({
             fullname,
             mobile,
             email,
             dateOfBirth,
-            dp: {
-                public_id: result.public_id,
-                url: result.secure_url,
-            },
+            // dp: {
+            //     public_id: result.public_id,
+            //     url: result.secure_url,
+            // },
         });
 
+        const age = calculateAge(dateOfBirth)
+
+        if (age <= 15) {
+            user.parental_control = generateOTP()
+        }
         const savedUser = await user.save();
+
+        function calculateAge(dateOfBirth) {
+            const today = new Date();
+            const birthDate = new Date(dateOfBirth);
+
+            let age = today.getFullYear() - birthDate.getFullYear();
+
+            const hasBirthdayPassed = today.getMonth() < birthDate.getMonth() ||
+                (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate());
+
+            if (hasBirthdayPassed) {
+                age--;
+            }
+
+            return age;
+        }
+
+
 
         // Generate OTP
         const otp = String(generateOTP());
