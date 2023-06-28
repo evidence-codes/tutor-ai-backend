@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const auth = require("../middlewares/auth.middleware")
+const auth = require('../middlewares/auth.middleware');
 const { updateLevel } = require('../controllers/scores.controller');
 const {
     update,
@@ -26,8 +26,8 @@ router.post('/language/:id', setLanguage);
 
 router.patch('/update-pic/:id', changeDp);
 
-router.patch('/increase', auth, increaseLessons)
+router.put('/increase', auth, increaseLessons);
 
-router.delete('/delete', auth, deletes)
+router.delete('/delete', auth, deletes);
 
 module.exports = router;

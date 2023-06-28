@@ -19,9 +19,23 @@ const userSchema = new mongoose.Schema(
         dateOfBirth: {
             type: Date,
             required: true,
-            default: Date.now,
+            default: new Date(Date.now()).setFullYear(
+                new Date().getFullYear() - 15,
+            ),
         },
         level: {
+            type: String,
+            enum: [
+                null,
+                'Beginner',
+                'Pre-Intermediate',
+                'Intermediate',
+                'Upper-Intermediate',
+                'Confident',
+            ],
+            default: null,
+        },
+        initialLevel: {
             type: String,
             enum: [
                 null,
@@ -44,10 +58,10 @@ const userSchema = new mongoose.Schema(
         },
         payment: {
             type: Number,
-            default: 0
+            default: 0,
         },
         lessons: {
-            type: Array
+            type: Array,
         },
         dp: {
             public_id: {
@@ -58,7 +72,7 @@ const userSchema = new mongoose.Schema(
             },
         },
         parental_control: {
-            type: String
+            type: String,
         },
         password: {
             type: String,
