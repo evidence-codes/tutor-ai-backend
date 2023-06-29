@@ -52,9 +52,11 @@ io.on('connection', socket => {
     console.log(`User ${socket.id} Connected!`);
 
     socket.on('conversation', message => {
-        setTimeout(() => {
-            socket.emit('conversation', message);
-        }, [800]);
+        socket.emit('conversation', message);
+    });
+
+    socket.on('lesson', message => {
+        socket.emit('lesson', message);
     });
 
     socket.on('disconnect', () => {

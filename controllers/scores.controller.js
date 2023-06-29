@@ -10,6 +10,10 @@ const updateLevel = async (req, res) => {
 
         user.level = level;
 
+        if (user.level === null) {
+            user.initialLevel = level;
+        }
+
         await user.save();
 
         res.status(200).json('User Level updated successfully');
