@@ -145,7 +145,7 @@ const increaseLessons = async (req, res) => {
             message: "User's lesson has been increased ",
         });
     } catch (err) {
-        res.status(500).json(err?.message || 'Something went Wrong');
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -155,7 +155,7 @@ const deletes = async (req, res) => {
         if (!user) throw new ResourceNotFound('User does not exist');
         res.status(200).json({ message: 'User deleted...' });
     } catch (err) {
-        res.status(500).json(err?.message || 'Something went Wrong');
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
