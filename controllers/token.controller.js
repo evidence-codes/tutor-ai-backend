@@ -66,15 +66,15 @@ const parentalControl = async (req, res) => {
         await user.save();
         res.status(200).json({ message: 'Pin sent successfully' });
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
-function generateOTP() {
+const generateOTP = () => {
     return `${Math.floor(Math.random() * 10)} ${Math.floor(
         Math.random() * 10,
     )} ${Math.floor(Math.random() * 10)} ${Math.floor(Math.random() * 10)}`;
-}
+};
 
 module.exports = {
     verifyOTP,
