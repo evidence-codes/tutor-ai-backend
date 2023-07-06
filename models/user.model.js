@@ -61,7 +61,49 @@ const userSchema = new mongoose.Schema(
             default: 0,
         },
         lessons: {
-            type: Array,
+            type: [
+                {
+                    id: {
+                        type: Number,
+                    },
+                    score: {
+                        type: Number,
+                    },
+                },
+            ],
+            default: [
+                { id: 101, score: null },
+                { id: 201, score: null },
+                { id: 301, score: null },
+                { id: 401, score: null },
+                { id: 501, score: null },
+            ],
+        },
+        exams: {
+            type: [
+                {
+                    level: {
+                        type: String,
+                        enum: [
+                            'Beginner',
+                            'Pre-Intermediate',
+                            'Intermediate',
+                            'Upper-Intermediate',
+                            'Confident',
+                        ],
+                    },
+                    score: {
+                        type: Number,
+                    },
+                },
+            ],
+            default: [
+                { level: 'Beginner', score: null },
+                { level: 'Pre-Intermediate', score: null },
+                { level: 'Intermediate', score: null },
+                { level: 'Upper-Intermediate', score: null },
+                { level: 'Confident', score: null },
+            ],
         },
         dp: {
             public_id: {
