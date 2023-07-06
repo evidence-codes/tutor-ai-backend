@@ -1,4 +1,6 @@
 const aws = require('aws-sdk')
-aws.config(__dirname + '../config.json')
+aws.config.loadFromPath(__dirname + '../config.json');
 
-// const ses = new 
+const ses = new aws.SES();
+
+module.exports = ses;
