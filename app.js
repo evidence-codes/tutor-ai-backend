@@ -11,11 +11,11 @@ const engine = require('consolidate');
 const openai = require('./config/openai.config');
 
 const auth = require('./routes/auth.routes');
-const question = require('./routes/question.routes');
 const token = require('./routes/token.routes');
 const user = require('./routes/user.routes');
 const chat = require('./routes/chat.routes');
 const payment = require('./routes/payment.routes');
+const lesson = require('./routes/lesson.routes');
 
 const port = process.env.PORT || 5000;
 const uri = process.env.MONGO_URI;
@@ -38,11 +38,11 @@ const io = new Server(server, {
 });
 
 app.use('/api/auth', auth);
-app.use('/api/questions', question);
 app.use('/api/auth/token', token);
 app.use('/api/user', user);
 app.use('/api/chat', chat);
 app.use('/api/payment', payment);
+app.use('/api/lesson', lesson);
 
 app.use('/', (req, res) => {
     res.status(404).json(errorMiddlewares.formatError('Resource Not Found'));
