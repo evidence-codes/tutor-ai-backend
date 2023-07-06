@@ -1,21 +1,56 @@
 const openai = require('../config/openai.config');
 
 const chat = async (req, res) => {
-    try {
-        const { message } = req.body;
+    // try {
+    //     const { message } = req.body;
 
-        const chatCompletion = await openai.createChatCompletion({
-            model: 'gpt-3.5-turbo',
-            prompt: 'text',
-            messages: [{ role: 'user', content: message }],
+    //     const chatCompletion = await openai.createChatCompletion({
+    //         model: 'gpt-3.5-turbo',
+    //         prompt: 'text',
+    //         messages: [{ role: 'user', content: message }],
+    //     });
+
+    //     res.status(200).json(chatCompletion.data.choices[0].message);
+    // } catch (err) {
+    //     console.log('ERROR FROM GPT');
+    //     console.log(err);
+    //     res.status(500).json(err?.message || 'An Error Occured!');
+    // }
+
+    const history = [];
+    const user_input = req.body?.message;
+
+    const messages = [];
+    for (const [input_text, completion_text] of history) {
+        messages.push({ role: "user", content: input_text });
+        messages.push({ role: "assistant", content: completion_text });
+    }
+
+    messages.push({ role: "user", content: user_input });
+
+    try {
+        const completion = await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            messages: messages,
         });
 
-        res.status(200).json(chatCompletion.data.choices[0].message);
-    } catch (err) {
-        console.log('ERROR FROM GPT');
-        console.log(err);
-        res.status(500).json(err?.message || 'An Error Occured!');
+        const completion_text = completion.data.choices[0].message.content;
+        console.log(completion_text);
+
+        history.push([user_input, completion_text]);
+
+    } catch (error) {
+        if (error.response) {
+            console.log(error.response.status);
+            console.log(error.response.data);
+        } else {
+            console.log(error.message);
+        }
     }
+
+
+
+
 
     // try {
     //     const { prompt } = req.body;
