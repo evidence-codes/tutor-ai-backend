@@ -35,6 +35,12 @@ const register = async (req, res) => {
         if (age <= 15) {
             user.parental_control = generateOTP();
         }
+
+        const exists = await User.findOne({ email })
+        if (exists.verified === true) {
+            throw new BadRequest('User has already registered!')
+        }
+
         const savedUser = await user.save();
 
         function calculateAge(dateOfBirth) {

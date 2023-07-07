@@ -9,6 +9,7 @@
         "start": "node app.js"
     },
     "dependencies": {
+        "aws-sdk": "^2.1411.0",
         "bcrypt": "^5.1.0",
         "cloudinary": "^1.37.0",
         "consolidate": "^1.0.1",
