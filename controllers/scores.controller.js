@@ -7,7 +7,7 @@ const updateLevel = async (req, res) => {
         const user = await User.findById(req.params.id);
         if (!user) throw new ResourceNotFound('User does not exist');
 
-        if (user.level === null) {
+        if (user.initialLevel === null) {
             user.initialLevel = level;
         }
         user.level = level;
