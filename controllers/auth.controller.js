@@ -6,7 +6,7 @@ const {
     BadRequest,
     BaseError,
 } = require('../errors/httpErrors');
-const { signupEmail } = require('../services/email.service');
+const { signupEmail, parentalControlEmail } = require('../services/email.service');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -33,7 +33,9 @@ const register = async (req, res) => {
         const age = calculateAge(dateOfBirth);
 
         if (age <= 15) {
-            user.parental_control = generateOTP();
+            let pin = await generateOTP()
+            user.parental_control = pin;
+            await parentalControlEmail(email, pin)
         }
 
         const exists = await User.findOne({ email })
