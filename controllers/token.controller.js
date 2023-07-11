@@ -1,7 +1,7 @@
 const { BadRequest, ResourceNotFound } = require('../errors/httpErrors');
 const OTP = require('../models/otp.model');
 const User = require('../models/user.model');
-const { signupEmail } = require('../services/email.service');
+const { signupEmail, parentalControlEmail } = require('../services/email.service');
 
 const verifyOTP = async (req, res) => {
     try {
@@ -64,6 +64,7 @@ const parentalControl = async (req, res) => {
         const pc = generateOTP();
         user.parental_control = pc;
         await user.save();
+        await parentalControlEmail(user.email, pc)
         res.status(200).json({ message: 'Pin sent successfully' });
     } catch (err) {
         res.status(500).json(err?.message || 'An Error Occured!');
