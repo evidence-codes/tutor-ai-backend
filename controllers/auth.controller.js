@@ -12,22 +12,22 @@ const jwt = require('jsonwebtoken');
 
 const register = async (req, res) => {
     try {
-        const { fullname, mobile, email, dateOfBirth, dp, parental_control } =
+        const { fullname, mobile, email, dateOfBirth, parental_control } =
             req.body;
 
-        const result = await cloudinary.uploader.upload(dp, {
-            folder: 'profile_pics',
-        });
+        // const result = await cloudinary.uploader.upload(dp, {
+        //     folder: 'profile_pics',
+        // });
 
         const user = new User({
             fullname,
             mobile,
             email,
             dateOfBirth,
-            dp: {
-                public_id: result.public_id,
-                url: result.secure_url,
-            },
+            // dp: {
+            //     public_id: result.public_id,
+            //     url: result.secure_url,
+            // },
         });
 
         const age = calculateAge(dateOfBirth);
@@ -39,7 +39,7 @@ const register = async (req, res) => {
         }
 
         const exists = await User.findOne({ email })
-        if (exists.verified === true) {
+        if (exists?.verified === true) {
             throw new BadRequest('User has already registered!')
         }
 
