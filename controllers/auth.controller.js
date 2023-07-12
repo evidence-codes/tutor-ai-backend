@@ -6,44 +6,31 @@ const {
     BadRequest,
     BaseError,
 } = require('../errors/httpErrors');
-const { signupEmail, parentalControlEmail } = require('../services/email.service');
+const {
+    signupEmail,
+    parentalControlEmail,
+} = require('../services/email.service');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const register = async (req, res) => {
     try {
-        const { fullname, mobile, email, dateOfBirth, parental_control } =
-            req.body;
+        const { fullname, mobile, email, dateOfBirth, dp } = req.body;
 
-        // const result = await cloudinary.uploader.upload(dp, {
-        //     folder: 'profile_pics',
-        // });
+        const result = await cloudinary.uploader.upload(dp, {
+            folder: 'profile_pics',
+        });
 
         const user = new User({
             fullname,
             mobile,
             email,
             dateOfBirth,
-            // dp: {
-            //     public_id: result.public_id,
-            //     url: result.secure_url,
-            // },
+            dp: {
+                public_id: result.public_id,
+                url: result.secure_url,
+            },
         });
-
-        const age = calculateAge(dateOfBirth);
-
-        if (age <= 15) {
-            let pin = await generateOTP()
-            user.parental_control = pin;
-            await parentalControlEmail(email, pin)
-        }
-
-        const exists = await User.findOne({ email })
-        if (exists?.verified === true) {
-            throw new BadRequest('User has already registered!')
-        }
-
-        const savedUser = await user.save();
 
         function calculateAge(dateOfBirth) {
             const today = new Date();
@@ -63,12 +50,31 @@ const register = async (req, res) => {
             return age;
         }
 
+        const age = calculateAge(dateOfBirth);
+
         // Generate OTP
         const otp = String(generateOTP());
         const otpDoc = new OTP({ otp, user: user._id });
         await otpDoc.save();
 
+        const exists = await User.findOne({ email });
+        if (exists !== null) {
+            if (exists?.verified === true) {
+                throw new BadRequest('User has already registered!');
+            } else {
+                await exists.deleteOne();
+            }
+        }
+
+        const savedUser = await user.save();
+
         await signupEmail(email, otp);
+
+        if (age <= 15) {
+            let pin = generateOTP();
+            user.parental_control = pin;
+            await parentalControlEmail(email, pin);
+        }
 
         res.status(200).json(savedUser);
     } catch (err) {

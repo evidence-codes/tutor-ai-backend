@@ -117,7 +117,6 @@ const paypalSuccess = async (req, res) => {
     try {
         paypal.payment.execute(paymentId, executePayment, (error, payment) => {
             if (error) {
-                console.log(error);
                 res.status(500).json(
                     error.response.message || 'An Error Occured',
                 );
