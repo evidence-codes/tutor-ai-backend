@@ -1,7 +1,5 @@
 const {
-    sendMail,
-    addToMailingList,
-    removeFromMailingList,
+    sendMail
 } = require('../utils/emailHelpers');
 
 async function signupEmail(email, code) {
@@ -29,73 +27,35 @@ async function resetPasswordEmail(email, token) {
     await sendMail(options);
 }
 
-async function parentalControlEmail(email, code) {
+async function parentalControlEmail(email, pin) {
     const options = {
         to: email,
         subject: 'Parental Control Pin',
-        template: 'signup',
+        template: 'parent-control',
         variables: {
-            code,
+            pin,
         },
     };
 
     await sendMail(options);
 }
 
-async function deleteOTPEmail(email, code) {
+async function deleteOTPEmail(email, pin) {
     const options = {
         to: email,
         subject: 'Delete Account Pin',
-        template: 'signup',
+        template: 'delete',
         variables: {
-            code,
+            pin,
         },
     };
 
     await sendMail(options);
-}
-
-async function welcomeNotification({ email, name }) {
-    const options = {
-        to: email,
-        subject: 'Welcome to Grolite',
-        template: 'welcome',
-        variables: {
-            name,
-        },
-    };
-
-    await sendMail(options);
-}
-async function subscribeToNewsLetter({ email, name }) {
-    const options = {
-        email,
-        name,
-        listName: 'newsletter',
-    };
-
-    await addToMailingList(options);
-
-    // logger.info(`New user subscribed to Newsletter: ${email}`);
-}
-
-async function unsubscribeFromNewsLetter(email) {
-    const options = {
-        email,
-        listName: 'newsletter',
-    };
-
-    await removeFromMailingList(options);
-
-    // logger.info(`User unsubscribed from Newsletter: ${email}`);
 }
 
 module.exports = {
     signupEmail,
     resetPasswordEmail,
     parentalControlEmail,
-    deleteOTPEmail,
-    welcomeNotification,
-    subscribeToNewsLetter,
-    unsubscribeFromNewsLetter,
+    deleteOTPEmail
 };

@@ -1,7 +1,7 @@
 const emailClient = require('../config/mailgun.config');
 const moment = require('moment');
 require('dotenv').config();
-const domain = process.env.MAILGUN_DOMAIN;
+const domain = process.env.MAILGUN_DOMAIN || 'mail.tutorai-app.com';
 const sender = `Tutor AI <${process.env.MAILGUN_SENDER_EMAIL}>`;
 
 async function sendMail({ to, template, subject, variables = {} }) {
