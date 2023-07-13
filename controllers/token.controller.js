@@ -1,7 +1,11 @@
 const { BadRequest, ResourceNotFound } = require('../errors/httpErrors');
 const OTP = require('../models/otp.model');
 const User = require('../models/user.model');
-const { signupEmail, parentalControlEmail } = require('../services/email.service');
+const {
+    signupEmail,
+    parentalControlEmail,
+    deleteOTPEmail,
+} = require('../services/email.service');
 
 const verifyOTP = async (req, res) => {
     try {
@@ -63,9 +67,26 @@ const parentalControl = async (req, res) => {
         if (!user) throw new ResourceNotFound('User not found');
         const pc = generateOTP();
         user.parental_control = pc;
+        await parentalControlEmail(user.email, pc);
         await user.save();
-        await parentalControlEmail(user.email, pc)
-        res.status(200).json({ message: 'Pin sent successfully' });
+        res.status(200).json({ message: 'Pin sent successfully', pc_pin: pc });
+    } catch (err) {
+        res.status(500).json(err?.message || 'An Error Occured!');
+    }
+};
+
+const deleteAccountOTP = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) throw new ResourceNotFound('User not found');
+        const del_PIN = generateOTP();
+        user.delete_otp = del_PIN;
+        await deleteOTPEmail(user.email, del_PIN);
+        await user.save();
+        res.status(200).json({
+            message: 'Pin sent successfully',
+            del_PIN: del_PIN,
+        });
     } catch (err) {
         res.status(500).json(err?.message || 'An Error Occured!');
     }
@@ -81,4 +102,5 @@ module.exports = {
     verifyOTP,
     resendOTP,
     parentalControl,
+    deleteAccountOTP,
 };

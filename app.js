@@ -48,18 +48,6 @@ app.use('/', (req, res) => {
     res.status(404).json(errorMiddlewares.formatError('Resource Not Found'));
 });
 
-// io.on('connection', socket => {
-//     console.log(`User ${socket.id} Connected!`);
-
-//     socket.on('conversation', message => {
-//         socket.emit('conversation', message);
-//     });
-
-//     socket.on('disconnect', () => {
-//         console.log(`User ${socket.id} Disconnected!`);
-//     });
-// });
-
 mongoose
     .connect(uri, {
         useNewUrlParser: true,

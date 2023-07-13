@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
         },
         email: {
             type: String,
-            required: true
+            required: true,
         },
         dateOfBirth: {
             type: Date,
@@ -113,6 +113,9 @@ const userSchema = new mongoose.Schema(
             },
         },
         parental_control: {
+            type: String,
+        },
+        delete_otp: {
             type: String,
         },
         password: {
