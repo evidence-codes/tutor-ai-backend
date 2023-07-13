@@ -32,7 +32,20 @@ async function resetPasswordEmail(email, token) {
 async function parentalControlEmail(email, code) {
     const options = {
         to: email,
-        subject: 'Parental control pin',
+        subject: 'Parental Control Pin',
+        template: 'signup',
+        variables: {
+            code,
+        },
+    };
+
+    await sendMail(options);
+}
+
+async function deleteOTPEmail(email, code) {
+    const options = {
+        to: email,
+        subject: 'Delete Account Pin',
         template: 'signup',
         variables: {
             code,
@@ -81,6 +94,7 @@ module.exports = {
     signupEmail,
     resetPasswordEmail,
     parentalControlEmail,
+    deleteOTPEmail,
     welcomeNotification,
     subscribeToNewsLetter,
     unsubscribeFromNewsLetter,
