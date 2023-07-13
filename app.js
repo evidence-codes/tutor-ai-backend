@@ -29,6 +29,9 @@ app.use(express.urlencoded({ limit: '15mb', extended: true }));
 app.use(cors('*'));
 app.use(errorMiddlewares.errorHandler);
 
+app.use(express.static('public'));
+app.use('/images', express.static('images'));
+
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
