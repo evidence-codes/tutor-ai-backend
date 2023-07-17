@@ -6,9 +6,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const errorMiddlewares = require('./middlewares/error.middleware');
 const http = require('http');
-const { Server } = require('socket.io');
 const engine = require('consolidate');
-const openai = require('./config/openai.config');
+const { Admin: AdminData, defaultAdminData } = require('./models/admin.model');
 
 const auth = require('./routes/auth.routes');
 const token = require('./routes/token.routes');
@@ -16,6 +15,7 @@ const user = require('./routes/user.routes');
 const chat = require('./routes/chat.routes');
 const payment = require('./routes/payment.routes');
 const lesson = require('./routes/lesson.routes');
+const admin = require('./routes/admin.routes');
 
 const port = process.env.PORT || 5000;
 const uri = process.env.MONGO_URI;
@@ -33,12 +33,12 @@ app.use(express.static('public'));
 app.use('/images', express.static('images'));
 
 const server = http.createServer(app);
-const io = new Server(server, {
-    cors: {
-        origin: '*',
-        methods: ['PUT', 'GET', 'POST', 'PATCH', 'DELETE'],
-    },
-});
+// const io = new Server(server, {
+//     cors: {
+//         origin: '*',
+//         methods: ['PUT', 'GET', 'POST', 'PATCH', 'DELETE'],
+//     },
+// });
 
 app.use('/api/auth', auth);
 app.use('/api/auth/token', token);
@@ -46,10 +46,22 @@ app.use('/api/user', user);
 app.use('/api/chat', chat);
 app.use('/api/payment', payment);
 app.use('/api/lesson', lesson);
+app.use('/api/admin', admin);
 
 app.use('/', (req, res) => {
     res.status(404).json(errorMiddlewares.formatError('Resource Not Found'));
 });
+
+const initialize_data = async () => {
+    try {
+        const count = await AdminData.countDocuments();
+        if (count === 0) {
+            await AdminData.create(defaultAdminData);
+        }
+    } catch (error) {
+        console.log('Error Initializing Data:', error);
+    }
+};
 
 mongoose
     .connect(uri, {
@@ -57,6 +69,7 @@ mongoose
         useUnifiedTopology: true,
     })
     .then(() => {
+        initialize_data();
         server.listen(port, async () => {
             console.log(`Server is listening on port ${port}`);
         });

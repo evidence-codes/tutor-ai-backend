@@ -1,11 +1,7 @@
 const User = require('../models/user.model');
 const OTP = require('../models/otp.model');
 const cloudinary = require('../config/cloudinary.config');
-const {
-    ResourceNotFound,
-    BadRequest,
-    BaseError,
-} = require('../errors/httpErrors');
+const { ResourceNotFound, BadRequest } = require('../errors/httpErrors');
 const {
     signupEmail,
     parentalControlEmail,

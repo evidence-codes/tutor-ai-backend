@@ -4,28 +4,48 @@ const activate_lesson = async (req, res) => {
     try {
         const user_id = req.body?.user_id;
         const lesson_id = req.body?.lesson_id;
+        const lesson_num = req.body?.lesson_num;
 
         const user = await User.findById(user_id);
         if (!user) throw new ResourceNotFound('User does not exist');
 
-        if (user.lessons?.filter(item => item?.id === lesson_id)?.length > 0) {
-            const tempLesson = user.lessons?.filter(
-                item => item?.id === lesson_id,
-            )?.[0];
-            res.status(200).json(tempLesson);
-        } else {
+        if (
+            lesson_num >
+            (user.lessons?.filter(item => item?.id === lesson_id)?.[0]
+                ?.lessons || 0)
+        ) {
             if (user.payment > 0) {
-                const addLesson = await User.findByIdAndUpdate(user_id, {
-                    $set: {
-                        lessons: [
-                            ...user.lessons,
-                            {
+                let new_lessons = [];
+
+                const l_group = user.lessons?.filter(
+                    item => item?.id === lesson_id,
+                );
+
+                if (l_group?.length > 0) {
+                    new_lessons = [...user.lessons].map(item => {
+                        if (item?.id === lesson_id) {
+                            return {
                                 id: lesson_id,
                                 score: null,
-                            },
-                        ],
-                        payment: user.payment - 1,
-                    },
+                                lessons: lesson_num,
+                            };
+                        } else {
+                            return item;
+                        }
+                    });
+                } else {
+                    new_lessons = [
+                        ...user?.lessons,
+                        {
+                            id: lesson_id,
+                            score: null,
+                            lessons: lesson_num,
+                        },
+                    ];
+                }
+                await User.findByIdAndUpdate(user_id, {
+                    lessons: new_lessons,
+                    payment: user.payment - 1,
                 });
 
                 const user_data = await User.findById(user_id);
@@ -40,6 +60,11 @@ const activate_lesson = async (req, res) => {
                     'Lesson Payment Exhausted, Please Re-subscribe!',
                 );
             }
+        } else {
+            const tempLesson = user.lessons?.filter(
+                item => item?.id === lesson_id,
+            )?.[0];
+            res.status(200).json(tempLesson);
         }
     } catch (err) {
         res.status(500).json(err?.message || 'An Error Occured!');

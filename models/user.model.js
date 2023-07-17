@@ -65,17 +65,20 @@ const userSchema = new mongoose.Schema(
                     id: {
                         type: Number,
                     },
+                    lessons: {
+                        type: Number,
+                    },
                     score: {
                         type: Number,
                     },
                 },
             ],
             default: [
-                { id: 101, score: null },
-                { id: 201, score: null },
-                { id: 301, score: null },
-                { id: 401, score: null },
-                { id: 501, score: null },
+                { id: 101, lessons: 3, score: null },
+                { id: 201, lessons: 6, score: null },
+                { id: 301, lessons: 7, score: null },
+                { id: 401, lessons: 7, score: null },
+                { id: 501, lessons: 2, score: null },
             ],
         },
         exams: {
