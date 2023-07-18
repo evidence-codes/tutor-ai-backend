@@ -53,13 +53,15 @@ app.use('/', (req, res) => {
 });
 
 const initialize_data = async () => {
-    try {
-        const count = await AdminData.countDocuments();
-        if (count === 0) {
-            await AdminData.create(defaultAdminData);
+    if (process.env.ADMIN_ID) {
+        try {
+            const count = await AdminData.countDocuments();
+            if (count === 0) {
+                await AdminData.create(defaultAdminData);
+            }
+        } catch (error) {
+            console.log('Error Initializing Data:', error);
         }
-    } catch (error) {
-        console.log('Error Initializing Data:', error);
     }
 };
 
