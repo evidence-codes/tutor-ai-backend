@@ -1,4 +1,4 @@
-const { BadRequest, ResourceNotFound } = require('../errors/httpErrors');
+const { ResourceNotFound } = require('../errors/httpErrors');
 const OTP = require('../models/otp.model');
 const User = require('../models/user.model');
 const {

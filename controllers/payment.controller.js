@@ -2,13 +2,14 @@ require('dotenv').config();
 const { SECRET_KEY } = process.env;
 const stripe = require('stripe')(SECRET_KEY);
 const User = require('../models/user.model');
+const { Admin } = require('../models/admin.model');
 const paypal = require('../config/paypal.config');
 
 const stripeIntent = async (req, res) => {
     const { userPlan } = req.body;
 
     try {
-        const user_plan = calculatePlanPrice(userPlan);
+        const user_plan = await calculatePlanPrice(userPlan);
         const generate_payment_intent = async ({ user, customer }) => {
             const payment_intent = await stripe.paymentIntents.create({
                 amount: user_plan?.stripe,
@@ -53,7 +54,7 @@ const paypalIntent = async (req, res) => {
 
     const server_url = `${req.protocol}://${req.get('host')}`;
     try {
-        const user_plan = calculatePlanPrice(userPlan);
+        const user_plan = await calculatePlanPrice(userPlan);
 
         const user = await User.findById(req.user.id);
         if (!user) throw new ResourceNotFound('User account not found');
@@ -133,20 +134,33 @@ const paypalCancel = (req, res) => {
     res.render('PaypalCancel');
 };
 
-const calculatePlanPrice = plan => {
-    const planPrices = {
-        plan_1: 16,
-        plan_2: 40.8,
-        plan_3: 72,
-    };
+const calculatePlanPrice = async plan => {
+    const admin = await Admin.findById(process.env.ADMIN_ID);
+    if (!admin) throw new Error('Invalid plan selection');
 
-    const noOfLessons = {
-        plan_1: 8,
-        plan_2: 24,
-        plan_3: 48,
-    };
+    function convertToPlanPrices(pricingData) {
+        const planPrices = {};
+        pricingData.forEach(plan => {
+            const totalPrice = plan.no_of_lessons * plan.price;
+            planPrices[plan.plan] = totalPrice;
+        });
+        return planPrices;
+    }
+    function convertToNoOfLessons(pricingData) {
+        const planLesson = {};
+        pricingData.forEach(plan => {
+            planLesson[plan.plan] = plan.no_of_lessons;
+        });
+        return planLesson;
+    }
+
+    const pricing = admin.pricing;
+
+    const planPrices = convertToPlanPrices([...pricing]);
+    const noOfLessons = convertToNoOfLessons([...pricing]);
 
     const price = planPrices[plan];
+
     if (price) {
         return {
             stripe: Math.floor(price * 100),
