@@ -92,7 +92,6 @@ const paypalIntent = async (req, res) => {
 
         paypal.payment.create(create_payment_json, (error, payment) => {
             if (error) {
-                console.log(error);
                 res.status(500).json(
                     error?.response?.message || 'An Error Occured',
                 );
