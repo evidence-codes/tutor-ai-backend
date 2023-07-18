@@ -92,8 +92,9 @@ const paypalIntent = async (req, res) => {
 
         paypal.payment.create(create_payment_json, (error, payment) => {
             if (error) {
+                console.log(error);
                 res.status(500).json(
-                    error.response.message || 'An Error Occured',
+                    error?.response?.message || 'An Error Occured',
                 );
             } else {
                 res.status(200).json(
@@ -119,7 +120,7 @@ const paypalSuccess = async (req, res) => {
         paypal.payment.execute(paymentId, executePayment, (error, payment) => {
             if (error) {
                 res.status(500).json(
-                    error.response.message || 'An Error Occured',
+                    error?.response?.message || 'An Error Occured',
                 );
             } else {
                 res.render('PaypalSuccess');
