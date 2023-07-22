@@ -9,6 +9,7 @@ const {
     changePassword,
     changeDp,
     increaseLessons,
+    getUserInfo,
     deletes,
 } = require('../controllers/user.controller');
 
@@ -27,6 +28,8 @@ router.post('/language/:id', setLanguage);
 router.patch('/update-pic/:id', changeDp);
 
 router.put('/increase', auth, increaseLessons);
+
+router.get('/get-info', auth, getUserInfo);
 
 router.delete('/delete', auth, deletes);
 

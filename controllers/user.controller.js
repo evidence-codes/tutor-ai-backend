@@ -149,6 +149,16 @@ const increaseLessons = async (req, res) => {
     }
 };
 
+const getUserInfo = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) throw new ResourceNotFound('User does not exist');
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json(err?.message || 'An Error Occured!');
+    }
+};
+
 const deletes = async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.user.id);
@@ -182,5 +192,6 @@ module.exports = {
     setLanguage,
     changeDp,
     increaseLessons,
+    getUserInfo,
     deletes,
 };
