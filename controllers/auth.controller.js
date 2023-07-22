@@ -28,23 +28,6 @@ const register = async (req, res) => {
             },
         });
 
-        function calculateAge(dateOfBirth) {
-            const today = new Date();
-            const birthDate = new Date(dateOfBirth);
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const hasBirthdayPassed =
-                today.getMonth() < birthDate.getMonth() ||
-                (today.getMonth() === birthDate.getMonth() &&
-                    today.getDate() < birthDate.getDate());
-
-            if (hasBirthdayPassed) {
-                age--;
-            }
-            return age;
-        }
-
-        const age = calculateAge(dateOfBirth);
-
         const otp = String(generateOTP());
         const otpDoc = new OTP({ otp, user: user._id });
         await otpDoc.save();
@@ -56,12 +39,6 @@ const register = async (req, res) => {
             } else {
                 await exists.deleteOne();
             }
-        }
-
-        if (age <= 15) {
-            let pin = generateOTP();
-            user.parental_control = pin;
-            await parentalControlEmail(email, pin);
         }
 
         const savedUser = await user.save();
@@ -81,15 +58,37 @@ const password = async (req, res) => {
         if (!user) throw new ResourceNotFound('User account not found');
         if (!user.verified) throw new BadRequest('User not verified');
         user.password = hash;
+        const calculateAge = () => {
+            const today = new Date();
+            const birthDate = new Date(user?.dateOfBirth);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const hasBirthdayPassed =
+                today.getMonth() < birthDate.getMonth() ||
+                (today.getMonth() === birthDate.getMonth() &&
+                    today.getDate() < birthDate.getDate());
+
+            if (hasBirthdayPassed) {
+                age--;
+            }
+            return age;
+        };
+        const age = calculateAge();
+        const pin = generateOTP();
+        if (age <= 15) {
+            user.parental_control = pin;
+            await parentalControlEmail(email, pin);
+        }
         await user.save();
         const payload = {
             id: user._id,
         };
         const accessToken = jwt.sign(payload, process.env.JWT_SEC);
+
         res.status(200).json({
             message: 'Password added successfully...',
             password: hash,
             accessToken,
+            pcPIN: pin,
         });
     } catch (err) {
         res.status(500).json(err?.message || 'An Error Occured!');

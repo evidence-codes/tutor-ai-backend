@@ -74,11 +74,11 @@ const userSchema = new mongoose.Schema(
                 },
             ],
             default: [
-                { id: 101, lessons: 3, score: null },
-                { id: 201, lessons: 6, score: null },
-                { id: 301, lessons: 7, score: null },
-                { id: 401, lessons: 7, score: null },
-                { id: 501, lessons: 2, score: null },
+                { id: 101, lessons: 1, score: null },
+                { id: 201, lessons: 1, score: null },
+                { id: 301, lessons: 1, score: null },
+                { id: 401, lessons: 1, score: null },
+                { id: 501, lessons: 1, score: null },
             ],
         },
         exams: {
