@@ -76,7 +76,9 @@ const password = async (req, res) => {
         const pin = generateOTP();
         if (age <= 15) {
             user.parental_control = pin;
-            await parentalControlEmail(email, pin);
+            if (user?.email) {
+                await parentalControlEmail(user?.email, pin);
+            }
         }
         await user.save();
         const payload = {
