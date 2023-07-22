@@ -132,7 +132,7 @@ const set_exam_score = async (req, res) => {
             score: exam_score,
         });
 
-        if (exam_score >= 70) {
+        if (exam_score >= 80) {
             switch (user.level) {
                 case 'Beginner':
                     user.level = 'Pre-Intermediate';
