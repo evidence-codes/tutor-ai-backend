@@ -16,6 +16,8 @@ const chat = require('./routes/chat.routes');
 const payment = require('./routes/payment.routes');
 const lesson = require('./routes/lesson.routes');
 const admin = require('./routes/admin.routes');
+const review = require('./routes/review.routes');
+const unsubscribe = require('./routes/unsubscribe.routes');
 
 const port = process.env.PORT || 5000;
 const uri = process.env.MONGO_URI;
@@ -47,6 +49,8 @@ app.use('/api/chat', chat);
 app.use('/api/payment', payment);
 app.use('/api/lesson', lesson);
 app.use('/api/admin', admin);
+app.use('/api/review', review);
+app.use('/api/unsubscribe', unsubscribe);
 
 app.use('/', (req, res) => {
     res.status(404).json(errorMiddlewares.formatError('Resource Not Found'));
