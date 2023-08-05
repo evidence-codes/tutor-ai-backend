@@ -8,10 +8,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'What are his hobbies?',
         },
-        instruction: {
-            word: 'Choose two correct answers.',
-            highlight: ['two'],
-        },
         options: [
             {
                 word: 'He likes playing tennis.',
@@ -34,10 +30,6 @@ const defaultProficiencyQData = [
         englishLevel: 'A2',
         question: {
             word: 'What time is it?',
-        },
-        instruction: {
-            word: 'Choose two correct answers.',
-            highlight: ['two'],
         },
         has_image: true,
         image_link:
@@ -65,10 +57,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'It is ____ today. There is no sun.',
         },
-        instruction: {
-            word: 'Choose one correct answer.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: 'rain',
@@ -94,10 +82,6 @@ const defaultProficiencyQData = [
                 'What did Helen do yesterday?\n' +
                 'She went to the shopping mall, but she ____ any clothes.',
         },
-        instruction: {
-            word: 'Choose one correct answer.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: "didn't buy",
@@ -120,10 +104,6 @@ const defaultProficiencyQData = [
         englishLevel: 'A2',
         question: {
             word: 'They ____ with Jackson in the conference room.',
-        },
-        instruction: {
-            word: 'Choose one correct answer.',
-            highlight: ['one'],
         },
         options: [
             {
@@ -148,10 +128,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'Living in the countryside is ____ than living in the city.',
         },
-        instruction: {
-            word: 'Choose one correct answer.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: 'healthyer',
@@ -173,10 +149,6 @@ const defaultProficiencyQData = [
         englishLevel: 'A2',
         question: {
             word: 'Adam is ____ many sports and is a ____ -known athlete.',
-        },
-        instruction: {
-            word: 'Choose one correct answers.',
-            highlight: ['one'],
         },
         options: [
             {
@@ -201,10 +173,6 @@ const defaultProficiencyQData = [
             word: 'Describing past experiences \n' + 'He has ____.',
             highlight: ['Describing', 'past', 'experiences'],
         },
-        instruction: {
-            word: 'Choose one correct answers.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: 'been to Japan',
@@ -227,10 +195,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'They ____ when the phone rang.',
         },
-        instruction: {
-            word: 'Choose one correct answers.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: 'were slept',
@@ -252,10 +216,6 @@ const defaultProficiencyQData = [
         englishLevel: 'A2',
         question: {
             word: 'What did she do in the clothes shop?',
-        },
-        instruction: {
-            word: 'Choose two correct answers.',
-            highlight: ['two'],
         },
         options: [
             {
@@ -284,10 +244,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'We ____ to work, but now we take the train.',
         },
-        instruction: {
-            word: 'Choose one correct answers.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: 'use to drove',
@@ -309,10 +265,6 @@ const defaultProficiencyQData = [
         englishLevel: 'B1',
         question: {
             word: 'Which sentence is NOT correct?',
-        },
-        instruction: {
-            word: 'Choose one wrong answers.',
-            highlight: ['one'],
         },
         options: [
             {
@@ -336,10 +288,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'I love to travel, but ____ to Australia since 2010.',
         },
-        instruction: {
-            word: 'Choose one correct answers.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: "I didn't been",
@@ -362,10 +310,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'Sarah had an exam yesterday and she’s really nervous about the results.',
             highlight: ['nervous'],
-        },
-        instruction: {
-            word: 'Choose two correct answers which have a similar meaning to "nervous".',
-            highlight: ['two'],
         },
         options: [
             {
@@ -391,10 +335,6 @@ const defaultProficiencyQData = [
             word: 'On the phone \nCustomer: "I’d like to speak to the manager please." \nReceptionist: "I’m sorry I can’t ____ now because she’s in a meeting. Please give me your number and I’ll ask her to ____.',
             highlight: ['\nCustomer:', '\nReceptionist:'],
         },
-        instruction: {
-            word: 'Choose one correct answer.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: 'ring you through / phone you back',
@@ -416,10 +356,6 @@ const defaultProficiencyQData = [
         englishLevel: 'B1',
         question: {
             word: 'His wife ____ their weekend, before they spoke about it.',
-        },
-        instruction: {
-            word: 'Choose one correct answer.',
-            highlight: ['one'],
         },
         options: [
             {
@@ -444,10 +380,6 @@ const defaultProficiencyQData = [
             word: 'Giving opinions \nJack: "Wow! That was an awesome concert." \nKaren: "Yeah it was incredible. However, their first album is my favourite." \n\nKaren agrees that the concert was amazing, ____ their earlier music is still the best.',
             highlight: ['Giving', 'opinions', '\nJack:', '\nKaren:'],
         },
-        instruction: {
-            word: 'Choose two correct answer.',
-            highlight: ['two'],
-        },
         options: [
             {
                 word: 'since she thinks',
@@ -471,9 +403,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'Her phone isn’t in her purse; it ____',
         },
-        instruction: {
-            word: 'Complete the sentence.',
-        },
         options: [
             {
                 word: 'mustn’t be in her car',
@@ -495,10 +424,6 @@ const defaultProficiencyQData = [
         englishLevel: 'B1',
         question: {
             word: 'You were late for an important meeting. You ____ home earlier.',
-        },
-        instruction: {
-            word: 'Choose one correct answer.',
-            highlight: ['one'],
         },
         options: [
             {
@@ -531,10 +456,6 @@ const defaultProficiencyQData = [
                 'the',
             ],
         },
-        instruction: {
-            word: 'Choose one correct answer which has a similar meaning.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: "can't mind / doesn't stand",
@@ -557,10 +478,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'Job opportunities \n\nBrother: "Why didn’t ____ you accept that amazing job offer in New York last year?" \nSister: "Because my home is in London."',
             highlight: ['Job', 'opportunities', '\n\nBrother:', '\nSister:'],
-        },
-        instruction: {
-            word: 'Choose one correct answer.',
-            highlight: ['one'],
         },
         options: [
             {
@@ -588,10 +505,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'They ____ to go to the beach every winter when they lived in Canada.',
         },
-        instruction: {
-            word: 'Choose one correct answer',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: 'were used',
@@ -613,10 +526,6 @@ const defaultProficiencyQData = [
         englishLevel: 'B2',
         question: {
             word: 'I don’t mind if you upgrade the software, ____ you back up the hard drive first.',
-        },
-        instruction: {
-            word: 'Choose two correct answers.',
-            highlight: ['two'],
         },
         options: [
             {
@@ -641,10 +550,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'I ____ for the last few months, because I moved to Madrid and had to study Spanish.',
         },
-        instruction: {
-            word: 'Choose one correct answer.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: 'haven’t been working',
@@ -666,10 +571,6 @@ const defaultProficiencyQData = [
         englishLevel: 'B2',
         question: {
             word: 'I’m sure that ____ her first autobiography by the end of the year.',
-        },
-        instruction: {
-            word: 'Choose two correct answers which have a similar meaning.',
-            highlight: ['two'],
         },
         options: [
             {
@@ -694,10 +595,6 @@ const defaultProficiencyQData = [
         question: {
             word: "The plane left ten minutes ago, but I couldn't fly because I didn't take my passport.If I ____ my passport, I ____ on the plane right now.",
         },
-        instruction: {
-            word: 'Choose one correct answer.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: "hadn't forgotten / would be",
@@ -719,9 +616,6 @@ const defaultProficiencyQData = [
         englishLevel: 'B2',
         question: {
             word: 'Brenda always forgets to set her alarm. She missed an important meeting.',
-        },
-        instruction: {
-            word: 'Choose the best sentence based on the information below.',
         },
         options: [
             {
@@ -746,10 +640,6 @@ const defaultProficiencyQData = [
             word: 'Who is the team leader least impressed by? \n\nTeam performance notes\n "Overall the team has performed extremely well on this project. Sarah is extremely motivated, Linda is disorganized but still very passionate, Jason is quite pessimistic and fairly stubborn, and Max is incredibly enthusiastic. However, they all seem to get on well with each other."',
             highlight: ['\n\nTeam', 'performance', 'notes\n'],
         },
-        instruction: {
-            word: 'Choose one correct answer.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: 'Jason',
@@ -772,10 +662,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'The Education Secretary negotiated with protesting teachers yesterday, and they have now insisted that she schedules a second meeting.\n\nThe politician ____ an agreement with the teachers yesterday.',
         },
-        instruction: {
-            word: 'Choose one correct answer that reflects the outcome of the negotiation.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: "can't have reached",
@@ -797,10 +683,6 @@ const defaultProficiencyQData = [
         englishLevel: 'C1',
         question: {
             word: 'The Chinese economy is rapidly growing and continues to ____ year after year.',
-        },
-        instruction: {
-            word: 'Choose one correct answer.',
-            highlight: ['one'],
         },
         options: [
             {
@@ -827,10 +709,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'It is ____ difficult to ensure the protection of endangered species.',
         },
-        instruction: {
-            word: 'Choose two correct answers.',
-            highlight: ['two'],
-        },
         options: [
             {
                 word: 'incredibly',
@@ -853,10 +731,6 @@ const defaultProficiencyQData = [
         englishLevel: 'C1',
         question: {
             word: 'They had no idea about their sister’s medical problems, because she hadn’t explained what was happening. She hasn’t ____ about her poor health.',
-        },
-        instruction: {
-            word: 'Choose one correct answer which has a similar meaning.',
-            highlight: ['one'],
         },
         options: [
             {
@@ -882,10 +756,6 @@ const defaultProficiencyQData = [
                 'After being accepted for a scholarship at university, I was unsure whether it was a good idea to live on campus.\n\n' +
                 'I was ____ about living on campus.',
         },
-        instruction: {
-            word: 'Choose one correct answer which has a similar meaning.',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: 'minding about',
@@ -907,9 +777,6 @@ const defaultProficiencyQData = [
         englishLevel: 'C1',
         question: {
             word: 'The formulation of new prescriptions drugs has had a profound effect on the overall health of developing nations.',
-        },
-        instruction: {
-            word: 'Which word is incorrect in this sentence?',
         },
         options: [
             {
@@ -934,10 +801,6 @@ const defaultProficiencyQData = [
             word: 'Approximately €5,000,000 has already been donated to charity for last week’s natural disaster.',
             highlight: ['Approximately'],
         },
-        instruction: {
-            word: 'Choose one correct answer which has a similar meaning to "approximately".',
-            highlight: ['one'],
-        },
         options: [
             {
                 word: 'Somewhere the range of',
@@ -960,10 +823,6 @@ const defaultProficiencyQData = [
         question: {
             word: 'Below is an extract from the text: \n"Regrettably, a large number ____"',
             highlight: ['\n"Regrettably,'],
-        },
-        instruction: {
-            word: 'Choose one correct answer which has a similar meaning to "regrettably".',
-            highlight: ['one'],
         },
         options: [
             {
@@ -993,10 +852,6 @@ const proficiencyQSchema = new mongoose.Schema(
             default: 'A2',
         },
         question: {
-            word: String,
-            highlight: [String],
-        },
-        instruction: {
             word: String,
             highlight: [String],
         },
