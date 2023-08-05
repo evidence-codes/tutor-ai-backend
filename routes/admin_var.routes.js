@@ -2,7 +2,7 @@ const router = require('express').Router();
 const {
     setAdminVariables,
     getAdminVariables,
-} = require('../controllers/admin.controller');
+} = require('../controllers/admin_var.controller');
 
 router.post('/set-variables', setAdminVariables);
 

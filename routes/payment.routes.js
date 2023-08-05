@@ -8,7 +8,6 @@ const {
 const auth = require('../middlewares/auth.middleware');
 
 router.post('/stripe-intent', auth, stripeIntent);
-
 router.post('/paypal-intent', auth, paypalIntent);
 router.get('/paypal-cancel', paypalCancel);
 router.get('/paypal-success', paypalSuccess);

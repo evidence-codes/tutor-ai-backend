@@ -2,7 +2,7 @@ require('dotenv').config();
 const { SECRET_KEY } = process.env;
 const stripe = require('stripe')(SECRET_KEY);
 const User = require('../models/user.model');
-const { Admin } = require('../models/admin.model');
+const { AdminVar } = require('../models/admin_var.model');
 const paypal = require('../config/paypal.config');
 
 const stripeIntent = async (req, res) => {
@@ -135,26 +135,29 @@ const paypalCancel = (req, res) => {
 };
 
 const calculatePlanPrice = async plan => {
-    const admin = await Admin.findById(process.env.ADMIN_ID);
-    if (!admin) throw new Error('Invalid plan selection');
+    const adminVar = await AdminVar.findById(process.env.ADMIN_VAR_ID);
+    if (!adminVar) throw new Error('Invalid plan selection');
 
-    function convertToPlanPrices(pricingData) {
+    const convertToPlanPrices = pricingData => {
         const planPrices = {};
         pricingData.forEach(plan => {
-            const totalPrice = plan.no_of_lessons * plan.price;
+            const totalPrice =
+                ((100 - (plan.discount || 0)) / 100) *
+                plan.no_of_lessons *
+                plan.price;
             planPrices[plan.plan] = totalPrice;
         });
         return planPrices;
-    }
-    function convertToNoOfLessons(pricingData) {
+    };
+    const convertToNoOfLessons = pricingData => {
         const planLesson = {};
         pricingData.forEach(plan => {
             planLesson[plan.plan] = plan.no_of_lessons;
         });
         return planLesson;
-    }
+    };
 
-    const pricing = admin.pricing;
+    const pricing = adminVar.pricing;
 
     const planPrices = convertToPlanPrices([...pricing]);
     const noOfLessons = convertToNoOfLessons([...pricing]);
