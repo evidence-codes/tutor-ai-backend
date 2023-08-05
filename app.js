@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 const errorMiddlewares = require('./middlewares/error.middleware');
 const http = require('http');
 const engine = require('consolidate');
-const { Admin: AdminData, defaultAdminData } = require('./models/admin.model');
 
 const auth = require('./routes/auth.routes');
 const token = require('./routes/token.routes');
@@ -15,9 +14,11 @@ const user = require('./routes/user.routes');
 const chat = require('./routes/chat.routes');
 const payment = require('./routes/payment.routes');
 const lesson = require('./routes/lesson.routes');
-const admin = require('./routes/admin.routes');
+const admin_var = require('./routes/admin_var.routes');
 const review = require('./routes/review.routes');
 const unsubscribe = require('./routes/unsubscribe.routes');
+const pretest = require('./routes/pretest.routes');
+const { initialize_data } = require('./initialize_data');
 
 const port = process.env.PORT || 5000;
 const uri = process.env.MONGO_URI;
@@ -48,26 +49,14 @@ app.use('/api/user', user);
 app.use('/api/chat', chat);
 app.use('/api/payment', payment);
 app.use('/api/lesson', lesson);
-app.use('/api/admin', admin);
+app.use('/api/admin-vars', admin_var);
 app.use('/api/review', review);
 app.use('/api/unsubscribe', unsubscribe);
+app.use('/api/pretest', pretest);
 
 app.use('/', (req, res) => {
     res.status(404).json(errorMiddlewares.formatError('Resource Not Found'));
 });
-
-const initialize_data = async () => {
-    if (process.env.ADMIN_ID) {
-        try {
-            const count = await AdminData.countDocuments();
-            if (count === 0) {
-                await AdminData.create(defaultAdminData);
-            }
-        } catch (error) {
-            console.log('Error Initializing Data:', error);
-        }
-    }
-};
 
 mongoose
     .connect(uri, {
