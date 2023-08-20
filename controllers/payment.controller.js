@@ -1,6 +1,6 @@
 require('dotenv').config();
-const { SECRET_KEY } = process.env;
-const stripe = require('stripe')(SECRET_KEY);
+const { STRIPE_SECRET_KEY } = process.env;
+const stripe = require('stripe')(STRIPE_SECRET_KEY);
 const User = require('../models/user.model');
 const { AdminVar } = require('../models/admin_var.model');
 const paypal = require('../config/paypal.config');
