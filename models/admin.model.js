@@ -18,7 +18,22 @@ const adminSchema = new mongoose.Schema(
         password: {
             type: String,
             required: true
-        }
+        },
+        priviledge: {
+            type: String,
+            enum: [
+                'View Only'
+            ],
+            default: 'View Only'
+        },
+        dp: {
+            public_id: {
+                type: String,
+            },
+            url: {
+                type: String,
+            },
+        },
     }
 );
 
