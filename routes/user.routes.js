@@ -11,6 +11,8 @@ const {
     increaseLessons,
     getUserInfo,
     deletes,
+    user,
+    suscribedUsers,
 } = require('../controllers/user.controller');
 
 router.patch('/:id', update);
@@ -32,5 +34,9 @@ router.put('/increase', auth, increaseLessons);
 router.get('/get-info', auth, getUserInfo);
 
 router.delete('/delete', auth, deletes);
+
+router.get('/get-users', user);
+
+router.get('/get-suscribed-users', suscribedUsers)
 
 module.exports = router;
