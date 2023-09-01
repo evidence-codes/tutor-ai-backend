@@ -185,7 +185,7 @@ const userIdGenerator = () => {
     return randomID;
 };
 
-const user = async (req, res) => {
+const noOfUser = async (req, res) => {
     try {
         const user = await User.find();
         const noOfUsers = Object.keys(user).length;
@@ -206,6 +206,16 @@ const suscribedUsers = async (req, res) => {
     }
 }
 
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+
+        res.status(200).json(users)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}
+
 module.exports = {
     update,
     forgotPassword,
@@ -216,6 +226,7 @@ module.exports = {
     increaseLessons,
     getUserInfo,
     deletes,
-    user,
-    suscribedUsers
+    noOfUser,
+    suscribedUsers,
+    getAllUsers
 };
