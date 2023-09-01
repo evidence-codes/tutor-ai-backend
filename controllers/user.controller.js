@@ -161,11 +161,12 @@ const getUserInfo = async (req, res) => {
 
 const deletes = async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.user.id);
+        const user = await User.findById(req.user.id);
         if (!user) throw new ResourceNotFound('User does not exist');
         if (user?.dp?.public_id) {
             await cloudinary.uploader.destroy(user?.dp?.public_id);
         }
+        await user.deleteOne();
         res.status(200).json({ message: 'User deleted...' });
     } catch (err) {
         res.status(500).json(err?.message || 'An Error Occured!');
