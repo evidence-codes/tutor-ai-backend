@@ -18,6 +18,8 @@ const admin_var = require('./routes/admin_var.routes');
 const review = require('./routes/review.routes');
 const unsubscribe = require('./routes/unsubscribe.routes');
 const pretest = require('./routes/pretest.routes');
+const pricing = require('./routes/pricing.routes');
+const faq = require('./routes/faq.routes');
 const { initialize_data } = require('./initialize_data');
 
 const port = process.env.PORT || 5000;
@@ -36,12 +38,6 @@ app.use(express.static('public'));
 app.use('/images', express.static('images'));
 
 const server = http.createServer(app);
-// const io = new Server(server, {
-//     cors: {
-//         origin: '*',
-//         methods: ['PUT', 'GET', 'POST', 'PATCH', 'DELETE'],
-//     },
-// });
 
 app.use('/api/auth', auth);
 app.use('/api/auth/token', token);
@@ -53,6 +49,8 @@ app.use('/api/admin-vars', admin_var);
 app.use('/api/review', review);
 app.use('/api/unsubscribe', unsubscribe);
 app.use('/api/pretest', pretest);
+app.use('/api/pricing', pricing);
+app.use('/api/faq', faq);
 
 app.use('/', (req, res) => {
     res.status(404).json(errorMiddlewares.formatError('Resource Not Found'));

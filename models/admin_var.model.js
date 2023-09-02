@@ -2,56 +2,6 @@ const mongoose = require('mongoose');
 
 const defaultAdminVarData = {
     _id: process.env.ADMIN_VAR_ID,
-    pricing: [
-        {
-            id: 1,
-            no_of_lessons: 8,
-            price: 2,
-            plan: 'plan_1',
-            thirty_mins: false,
-            discount: 0,
-        },
-        {
-            id: 2,
-            no_of_lessons: 24,
-            price: 1.7,
-            plan: 'plan_2',
-            thirty_mins: false,
-            discount: 0,
-        },
-        {
-            id: 3,
-            no_of_lessons: 48,
-            price: 1.5,
-            plan: 'plan_3',
-            thirty_mins: false,
-            discount: 0,
-        },
-        {
-            id: 4,
-            no_of_lessons: 16,
-            price: 0.5,
-            plan: 'plan_4',
-            thirty_mins: true,
-            discount: 0,
-        },
-        {
-            id: 5,
-            no_of_lessons: 24,
-            price: 0.4167,
-            plan: 'plan_5',
-            thirty_mins: true,
-            discount: 0,
-        },
-        {
-            id: 6,
-            no_of_lessons: 36,
-            price: 0.361,
-            plan: 'plan_6',
-            thirty_mins: true,
-            discount: 0,
-        },
-    ],
     mail: 'mailto:info@tutorai-app.com',
     whatsapp: 'https://wa.me/+994702159088',
     instagram: 'https://www.instagram.com',
@@ -65,19 +15,6 @@ const defaultAdminVarData = {
 
 const adminVarSchema = new mongoose.Schema(
     {
-        pricing: {
-            type: [
-                {
-                    id: Number,
-                    no_of_lessons: Number,
-                    price: Number,
-                    plan: String,
-                    thirty_mins: Boolean,
-                    discount: Number,
-                },
-            ],
-            default: defaultAdminVarData.pricing,
-        },
         mail: {
             type: String,
             default: defaultAdminVarData.mail,
