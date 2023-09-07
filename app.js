@@ -18,6 +18,7 @@ const admin_var = require('./routes/admin_var.routes');
 const review = require('./routes/review.routes');
 const unsubscribe = require('./routes/unsubscribe.routes');
 const pretest = require('./routes/pretest.routes');
+const admin = require('./routes/admin.routes')
 const { initialize_data } = require('./initialize_data');
 
 const port = process.env.PORT || 5000;
@@ -53,6 +54,7 @@ app.use('/api/admin-vars', admin_var);
 app.use('/api/review', review);
 app.use('/api/unsubscribe', unsubscribe);
 app.use('/api/pretest', pretest);
+app.use('/api/admin', admin)
 
 app.use('/', (req, res) => {
     res.status(404).json(errorMiddlewares.formatError('Resource Not Found'));
