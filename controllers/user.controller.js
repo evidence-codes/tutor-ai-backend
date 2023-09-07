@@ -185,37 +185,6 @@ const userIdGenerator = () => {
     return randomID;
 };
 
-const noOfUser = async (req, res) => {
-    try {
-        const user = await User.find();
-        const noOfUsers = Object.keys(user).length;
-        res.status(200).json({ data: noOfUsers })
-    } catch (err) {
-        res.status(500).json(err)
-    }
-}
-
-const suscribedUsers = async (req, res) => {
-    try {
-        const users = await User.find({ payment: { $gt: 0 } })
-        // || await User.find().where('payment').gt(0).exec()
-        const noOfSUbscribedUsers = Object.keys(users).length;
-        res.status(200).json({ no_of_subscribed_users: noOfSUbscribedUsers })
-    } catch (err) {
-        res.status(500).json(err)
-    }
-}
-
-const getAllUsers = async (req, res) => {
-    try {
-        const users = await User.find();
-
-        res.status(200).json(users)
-    } catch (err) {
-        res.status(500).json(err)
-    }
-}
-
 module.exports = {
     update,
     forgotPassword,
@@ -225,8 +194,5 @@ module.exports = {
     changeDp,
     increaseLessons,
     getUserInfo,
-    deletes,
-    noOfUser,
-    suscribedUsers,
-    getAllUsers
-};
+    deletes
+}
