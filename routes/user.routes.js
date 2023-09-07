@@ -10,10 +10,7 @@ const {
     changeDp,
     increaseLessons,
     getUserInfo,
-    deletes,
-    noOfUser,
-    suscribedUsers,
-    getAllUsers,
+    deletes
 } = require('../controllers/user.controller');
 
 router.patch('/:id', update);
@@ -35,11 +32,5 @@ router.put('/increase', auth, increaseLessons);
 router.get('/get-info', auth, getUserInfo);
 
 router.delete('/delete', auth, deletes);
-
-router.get('/get-users', noOfUser);
-
-router.get('/get-suscribed-users', suscribedUsers)
-
-router.get('/get-all-users', getAllUsers)
 
 module.exports = router;
