@@ -2,7 +2,7 @@ require('dotenv').config();
 const { STRIPE_SECRET_KEY } = process.env;
 const stripe = require('stripe')(STRIPE_SECRET_KEY);
 const User = require('../models/user.model');
-const { AdminVar } = require('../models/admin_var.model');
+const { Pricing } = require('../models/pricing.model');
 const paypal = require('../config/paypal.config');
 
 const stripeIntent = async (req, res) => {
@@ -135,8 +135,8 @@ const paypalCancel = (req, res) => {
 };
 
 const calculatePlanPrice = async plan => {
-    const adminVar = await AdminVar.findById(process.env.ADMIN_VAR_ID);
-    if (!adminVar) throw new Error('Invalid plan selection');
+    const pricingData = await Pricing.find();
+    if (!pricingData) throw new Error('Invalid plan!');
 
     const convertToPlanPrices = pricingData => {
         const planPrices = {};
@@ -157,7 +157,7 @@ const calculatePlanPrice = async plan => {
         return planLesson;
     };
 
-    const pricing = adminVar.pricing;
+    const pricing = pricingData;
 
     const planPrices = convertToPlanPrices([...pricing]);
     const noOfLessons = convertToNoOfLessons([...pricing]);

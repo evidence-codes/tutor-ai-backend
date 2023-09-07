@@ -15,6 +15,13 @@ const {
     defaultProficiencyQData,
 } = require('./models/proficiencyQ.model');
 
+const {
+    Pricing: PricingData,
+    defaultPricingData,
+} = require('./models/pricing.model');
+
+const { FAQ: FAQData, defaultFAQs } = require('./models/faq.model');
+
 const initialize_data = async () => {
     // Admin Variables
     if (process.env.ADMIN_VAR_ID) {
@@ -56,6 +63,26 @@ const initialize_data = async () => {
         }
     } catch (error) {
         console.log('Error Initializing Proficiency Pre-Test Data: ', error);
+    }
+
+    // Pricing
+    try {
+        const pr_count = await PricingData.countDocuments();
+        if (pr_count === 0) {
+            await PricingData.create(defaultPricingData);
+        }
+    } catch (error) {
+        console.log('Error uploading Pricing Data: ', error);
+    }
+
+    // FAQs
+    try {
+        const f_count = await FAQData.countDocuments();
+        if (f_count === 0) {
+            await FAQData.create(defaultFAQs);
+        }
+    } catch (error) {
+        console.log('Error uploading FAQs Data: ', error);
     }
 };
 
