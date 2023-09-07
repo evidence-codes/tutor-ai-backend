@@ -2,7 +2,7 @@ const Admin = require("../models/admin.model");
 const User = require("../models/user.model")
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { ResourceNotFound, BadRequest } = require('../errors/httpErrors');
+const { ResourceNotFound } = require('../errors/httpErrors');
 const cloudinary = require('../config/cloudinary.config');
 
 const create = async (req, res) => {
@@ -25,15 +25,15 @@ const create = async (req, res) => {
             dp: {
                 public_id: result.public_id,
                 url: result.secure_url,
-            }
+            },
         });
 
-        const savedAdmin = await admin.save()
-        res.status(200).json(savedAdmin)
+        const savedAdmin = await admin.save();
+        res.status(200).json(savedAdmin);
     } catch (err) {
-        res.status(500).json(err)
+        res.status(500).json(err);
     }
-}
+};
 
 const login = async (req, res) => {
     try {
@@ -122,3 +122,4 @@ module.exports = {
     newSignup,
     subscribers
 }
+
