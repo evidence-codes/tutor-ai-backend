@@ -1,4 +1,5 @@
 const Admin = require("../models/admin.model");
+const User = require("../models/user.model")
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { ResourceNotFound, BadRequest } = require('../errors/httpErrors');
@@ -38,7 +39,7 @@ const login = async (req, res) => {
     try {
         let user;
         const { email: IncomingEmail, password: IncomingPassword } = req.body;
-        user = await User.findOne({ email: IncomingEmail });
+        user = await Admin.findOne({ email: IncomingEmail });
         if (!user) throw new ResourceNotFound('Invalid Email/Password ');
         const { password } = user;
         const compare = await bcrypt.compare(IncomingPassword, password);
@@ -53,7 +54,71 @@ const login = async (req, res) => {
         res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
+
+const noOfUser = async (req, res) => {
+    try {
+        const user = await User.find();
+        const noOfUsers = Object.keys(user).length;
+        res.status(200).json({ data: noOfUsers })
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}
+
+const subscribedUsers = async (req, res) => {
+    try {
+        const users = await User.find({ payment: { $gt: 0 } })
+        // || await User.find().where('payment').gt(0).exec()
+        const noOfSUbscribedUsers = Object.keys(users).length;
+        res.status(200).json({ no_of_subscribed_users: noOfSUbscribedUsers })
+    } catch (err) {
+        res.status(500).json(err)
+    }
+};
+
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+
+        res.status(200).json(users)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+};
+
+const newSignup = async (req, res) => {
+    try {
+        const users = await User.find({ payment: 0 });
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}
+
+const subscribers = async (req, res) => {
+    try {
+        const subscribers = await User.find().where('payment').gt(0).exec()
+        res.status(200).json(subscribers)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}
+
+const invoice = async (req, res) => {
+    try {
+
+    } catch (err) {
+        res.status(500).json(err)
+    }
+};
+
+
 module.exports = {
     create,
-    login
+    login,
+    noOfUser,
+    subscribedUsers,
+    getAllUsers,
+    newSignup,
+    subscribers
 }
