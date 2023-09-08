@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { create, login, noOfUser, subscribedUsers, getAllUsers, newSignup, subscribers } = require('../controllers/admin.controller');
+const { create, login, noOfUser, subscribedUsers, getAllUsers, newSignup, subscribers, invoice } = require('../controllers/admin.controller');
 
 router.post('/create-admin', create)
 
@@ -15,6 +15,6 @@ router.get('/new-signup', newSignup);
 
 router.get('/subscribers', subscribers);
 
-
+router.get('/get-invoice-data', invoice)
 
 module.exports = router;
