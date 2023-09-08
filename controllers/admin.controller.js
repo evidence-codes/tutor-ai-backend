@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { ResourceNotFound } = require('../errors/httpErrors');
 const cloudinary = require('../config/cloudinary.config');
+const axios = require("axios")
 
 const create = async (req, res) => {
     try {
@@ -105,11 +106,32 @@ const subscribers = async (req, res) => {
 }
 
 const invoice = async (req, res) => {
+    const accessToken = await getAccessToken();
     try {
-
+        const invoices = await axios.get('https://api-m.sandbox.paypal.com/v2/invoicing/invoices?total_required=true', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        res.status(200).json(invoices.data)
     } catch (err) {
         res.status(500).json(err)
     }
+};
+
+const clientId = process.env.PAYPAL_CLIENT_ID
+const clientSecret = process.env.PAYPAL_CLIENT_SECRET
+const getAccessToken = async () => {
+    const authHeader = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+    const response = await axios.post('https://api-m.sandbox.paypal.com/v1/oauth2/token', 'grant_type=client_credentials', {
+        headers: {
+            Authorization: `Basic ${authHeader}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    });
+
+    return response.data.access_token;
 };
 
 
@@ -120,6 +142,7 @@ module.exports = {
     subscribedUsers,
     getAllUsers,
     newSignup,
-    subscribers
+    subscribers,
+    invoice
 }
 
