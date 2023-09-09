@@ -26,7 +26,7 @@ const activate_lesson = async (req, res) => {
                         if (item?.id === lesson_id) {
                             return {
                                 id: lesson_id,
-                                score: null,
+                                score: [],
                                 lessons: lesson_num,
                             };
                         } else {
@@ -38,7 +38,7 @@ const activate_lesson = async (req, res) => {
                         ...user?.lessons,
                         {
                             id: lesson_id,
-                            score: null,
+                            score: [],
                             lessons: lesson_num,
                         },
                     ];
@@ -75,17 +75,18 @@ const set_homework_score = async (req, res) => {
     try {
         const user_id = req.user?.id;
         const lesson_id = req.body?.lesson_id;
+        const sub_lesson_id = req.body?.sub_lesson_id; // Index of the Lesson Topic in the Frontend
         const lesson_score = req.body?.lesson_score;
 
         const user = await User.findById(user_id);
         if (!user) throw new ResourceNotFound('User does not exist');
 
-        const updateScoreById = ({ data, id, score }) => {
+        const updateScoreById = ({ data, id, sub_id, score }) => {
             return data.map(obj => {
                 if (obj.id === id) {
                     return {
                         ...obj,
-                        score: score,
+                        score: obj?.score?.splice(sub_id, 1, score),
                     };
                 }
                 return obj;
@@ -95,6 +96,7 @@ const set_homework_score = async (req, res) => {
         user.lessons = updateScoreById({
             data: [...user?.lessons],
             id: lesson_id,
+            sub_id: sub_lesson_id,
             score: lesson_score,
         });
         await user.save();
