@@ -21,12 +21,13 @@ const activate_lesson = async (req, res) => {
                     item => item?.id === lesson_id,
                 );
 
+                //! If the lesson exist, add it the lesson else, add a new lesson
                 if (l_group?.length > 0) {
                     new_lessons = [...user.lessons].map(item => {
                         if (item?.id === lesson_id) {
                             return {
                                 id: lesson_id,
-                                score: [],
+                                score: [...item.score],
                                 lessons: lesson_num,
                             };
                         } else {
@@ -43,6 +44,7 @@ const activate_lesson = async (req, res) => {
                         },
                     ];
                 }
+
                 await User.findByIdAndUpdate(user_id, {
                     lessons: new_lessons,
                     payment: user.payment - 1,
@@ -83,10 +85,20 @@ const set_homework_score = async (req, res) => {
 
         const updateScoreById = ({ data, id, sub_id, score }) => {
             return data.map(obj => {
+                const scores = obj?.score || [];
                 if (obj.id === id) {
                     return {
                         ...obj,
-                        score: obj?.score?.splice(sub_id, 1, score),
+                        score:
+                            (scores?.length || 0) > sub_lesson_id
+                                ? scores.map((val, ind) => {
+                                      return ind === sub_lesson_id
+                                          ? lesson_score
+                                          : val;
+                                  })
+                                : (scores?.length || 0) > 0
+                                ? [...scores, lesson_score]
+                                : [lesson_score],
                     };
                 }
                 return obj;
