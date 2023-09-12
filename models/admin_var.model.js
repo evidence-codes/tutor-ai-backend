@@ -11,6 +11,7 @@ const defaultAdminVarData = {
     enable_paypal: true,
     enable_stripe: false,
     enable_flutterwave: false,
+    price_for_plan_conversion: 0.5,
 };
 
 const adminVarSchema = new mongoose.Schema(
@@ -50,6 +51,10 @@ const adminVarSchema = new mongoose.Schema(
         enable_flutterwave: {
             type: Boolean,
             default: defaultAdminVarData.enable_flutterwave,
+        },
+        price_for_plan_conversion: {
+            type: Number,
+            default: defaultAdminVarData.price_for_plan_conversion,
         },
     },
     { timestamps: false },

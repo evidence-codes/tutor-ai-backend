@@ -2,6 +2,7 @@ require('dotenv').config();
 const { STRIPE_SECRET_KEY } = process.env;
 const stripe = require('stripe')(STRIPE_SECRET_KEY);
 const User = require('../models/user.model');
+const { AdminVar } = require('../models/admin_var.model');
 const { Pricing } = require('../models/pricing.model');
 const paypal = require('../config/paypal.config');
 
@@ -28,7 +29,7 @@ const stripeIntent = async (req, res) => {
         };
 
         const user = await User.findById(req.user.id);
-        if (!user) throw new ResourceNotFound('User account not found');
+        if (!user) throw new ResourceNotFound('User account not found!');
 
         const existingCustomers = await stripe.customers.list({
             email: user?.email,
@@ -134,6 +135,119 @@ const paypalCancel = (req, res) => {
     res.render('PaypalCancel');
 };
 
+const planUpgradeStripeIntent = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) throw new ResourceNotFound('User account not found!');
+
+        const adminVar = await AdminVar.findById(process.env.ADMIN_VAR_ID);
+        if (!adminVar) throw new ResourceNotFound('An Error Occured!');
+
+        if (user.payment <= 0 || adminVar.price_for_plan_conversion <= 0) {
+            throw new ResourceNotFound('An Error Occured!');
+        }
+        const amountToPay = user.payment * adminVar.price_for_plan_conversion;
+
+        const generate_payment_intent = async ({ user, customer }) => {
+            const payment_intent = await stripe.paymentIntents.create({
+                amount: Math.floor(amountToPay * 100),
+                currency: 'usd',
+                automatic_payment_methods: {
+                    enabled: true,
+                },
+                customer: customer?.id,
+                metadata: {
+                    customerName: user?.fullname,
+                    customerEmail: user?.email,
+                },
+                description: `$${amountToPay} paid by ${user?.fullname} for Study Plan Upgrade (60-minute plan).`,
+            });
+            res.status(200).json(payment_intent?.client_secret);
+        };
+
+        const existingCustomers = await stripe.customers.list({
+            email: user?.email,
+        });
+
+        if (existingCustomers.data.length > 0) {
+            const customer = existingCustomers.data[0];
+            generate_payment_intent({ user: user, customer: customer });
+        } else {
+            const customer = await stripe.customers.create({
+                name: user?.fullname,
+                email: user?.email,
+            });
+            generate_payment_intent({ user: user, customer: customer });
+        }
+    } catch (err) {
+        res.status(500).json(err?.message || 'An Error Occured!');
+    }
+};
+
+const planUpgradePaypalIntent = async (req, res) => {
+    const server_url = `${req.protocol}://${req.get('host')}`;
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) throw new ResourceNotFound('User account not found!');
+
+        const adminVar = await AdminVar.findById(process.env.ADMIN_VAR_ID);
+        if (!adminVar) throw new ResourceNotFound('An Error Occured!');
+
+        if (user.payment <= 0 || adminVar.price_for_plan_conversion <= 0) {
+            throw new ResourceNotFound('An Error Occured!');
+        }
+        const amountToPay = (
+            user.payment * adminVar.price_for_plan_conversion
+        )?.toFixed(2);
+
+        const create_payment_json = {
+            intent: 'sale',
+            payer: {
+                payment_method: 'paypal',
+            },
+            redirect_urls: {
+                return_url: `${server_url}/api/payment/paypal-success`,
+                cancel_url: `${server_url}/api/payment/paypal-cancel`,
+            },
+            transactions: [
+                {
+                    item_list: {
+                        items: [
+                            {
+                                name: 'TutorAI 60-minute Plan Upgrade.',
+                                sku: 'TutorAI 60-minute Plan Upgrade.',
+                                price: amountToPay,
+                                currency: 'USD',
+                                quantity: 1,
+                            },
+                        ],
+                    },
+                    amount: {
+                        currency: 'USD',
+                        total: amountToPay,
+                    },
+                    description: `$${amountToPay} paid by ${user?.fullname} for Study Plan Upgrade (60-minute plan).`,
+                },
+            ],
+        };
+
+        paypal.payment.create(create_payment_json, (error, payment) => {
+            if (error) {
+                res.status(500).json(
+                    error?.response?.message || 'An Error Occured',
+                );
+            } else {
+                res.status(200).json(
+                    payment.links.find(link => link.rel === 'approval_url')
+                        .href,
+                );
+            }
+        });
+    } catch (err) {
+        res.status(500).json(err?.message || 'An Error Occured!');
+    }
+};
+
 const calculatePlanPrice = async plan => {
     const pricingData = await Pricing.find();
     if (!pricingData) throw new Error('Invalid plan!');
@@ -175,4 +289,11 @@ const calculatePlanPrice = async plan => {
     }
 };
 
-module.exports = { stripeIntent, paypalIntent, paypalCancel, paypalSuccess };
+module.exports = {
+    stripeIntent,
+    paypalIntent,
+    paypalCancel,
+    paypalSuccess,
+    planUpgradePaypalIntent,
+    planUpgradeStripeIntent,
+};
