@@ -21,6 +21,10 @@ const {
 } = require('./models/pricing.model');
 
 const { FAQ: FAQData, defaultFAQs } = require('./models/faq.model');
+const {
+    LessonTopic,
+    defaultLessonTopics,
+} = require('./models/lesson_topics.model');
 
 const initialize_data = async () => {
     // Admin Variables
@@ -83,6 +87,16 @@ const initialize_data = async () => {
         }
     } catch (error) {
         console.log('Error uploading FAQs Data: ', error);
+    }
+
+    // Lesson Topics
+    try {
+        const lt_count = await LessonTopic.countDocuments();
+        if (lt_count === 0) {
+            await LessonTopic.create(defaultLessonTopics);
+        }
+    } catch (error) {
+        console.log('Error uploading Lesson Topics Data: ', error);
     }
 };
 
