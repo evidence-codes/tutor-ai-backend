@@ -10,7 +10,7 @@ const {
     changeDp,
     increaseLessons,
     getUserInfo,
-    deletes
+    deletes,
 } = require('../controllers/user.controller');
 
 router.patch('/:id', update);

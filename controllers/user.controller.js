@@ -194,5 +194,5 @@ module.exports = {
     changeDp,
     increaseLessons,
     getUserInfo,
-    deletes
-}
+    deletes,
+};
