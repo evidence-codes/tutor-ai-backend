@@ -20,6 +20,8 @@ const {
     defaultPricingData,
 } = require('./models/pricing.model');
 
+const Admin = require('./models/admin.model');
+
 const { FAQ: FAQData, defaultFAQs } = require('./models/faq.model');
 const {
     LessonTopic,
@@ -97,6 +99,31 @@ const initialize_data = async () => {
         }
     } catch (error) {
         console.log('Error uploading Lesson Topics Data: ', error);
+    }
+
+    // Super Admin Account
+    try {
+        const spa_count = await Admin.findOne({
+            email: process.env.SUPER_ADMIN_EMAIL,
+        });
+
+        if (!spa_count) {
+            const SuperAdminInfo = new Admin({
+                name: process.env.SUPER_ADMIN_NAME,
+                email: process.env.SUPER_ADMIN_EMAIL,
+                mobile: process.env.SUPER_ADMIN_MOBILE,
+                password: process.env.SUPER_ADMIN_PASSWORD,
+                dp: {
+                    public_id: process.env.SUPER_ADMIN_DP_PUBLIC_ID,
+                    url: process.env.SUPER_ADMIN_DP_URL,
+                },
+                privilege: 'Super Admin',
+                status: true,
+            });
+            await SuperAdminInfo.save();
+        }
+    } catch (error) {
+        console.log('Error uploading Admin Info: ', error);
     }
 };
 

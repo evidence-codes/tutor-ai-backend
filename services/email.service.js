@@ -1,6 +1,4 @@
-const {
-    sendMail
-} = require('../utils/emailHelpers');
+const { sendMail } = require('../utils/emailHelpers');
 
 async function signupEmail(email, code) {
     const options = {
@@ -57,5 +55,5 @@ module.exports = {
     signupEmail,
     resetPasswordEmail,
     parentalControlEmail,
-    deleteOTPEmail
+    deleteOTPEmail,
 };
