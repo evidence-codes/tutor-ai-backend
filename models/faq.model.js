@@ -2,14 +2,12 @@ const mongoose = require('mongoose');
 
 const defaultFAQs = [
     {
-        faq_id: 1,
         faq_title: 'What sets Tutor.AI English teaching app apart from others?',
         faq_body:
             "Our English teaching app stands out due to its comprehensive and interactive approach to language learning with AI tutor integration. It combines a wide range of features, including interactive lessons, speaking practice, progress tracking. The app's user-friendly interface, personalized learning recommendations, and high-quality content set it apart from other apps in the market.",
         faq_type: 'Why Tutor.AI?',
     },
     {
-        faq_id: 2,
         faq_title: 'What are the main features of the app?',
         faq_body:
             'The app offers a wide range of features, including:\n' +
@@ -24,35 +22,30 @@ const defaultFAQs = [
         faq_type: 'Features',
     },
     {
-        faq_id: 3,
         faq_title: 'Are there different levels or proficiency tests available?',
         faq_body:
             'Yes, the app offers multiple levels of difficulty to cater to learners of different proficiency levels, from beginners to confident. Additionally, there are proficiency tests available to assess your current level and help you set goals for improvement.',
         faq_type: 'Features',
     },
     {
-        faq_id: 4,
         faq_title: 'Can I track my progress using the app?',
         faq_body:
             'Yes, the app provides a comprehensive progress tracking system that allows you to monitor your performance and see your improvement over time. You can track your scores, completion rates, and overall proficiency level.',
         faq_type: 'Features',
     },
     {
-        faq_id: 5,
         faq_title: 'How can I improve my speaking skills with the app?',
         faq_body:
             'The app provides various speaking practice exercises and interactive conversations. You can engage in dialogues with your AI tutor and homework assistant and receive feedback on pronunciation and fluency.',
         faq_type: 'Features',
     },
     {
-        faq_id: 6,
         faq_title: 'Are there any grammar exercises or lessons in the app?',
         faq_body:
             'Absolutely! The app includes a wide range of grammar exercises and lessons to help you understand and master English grammar concepts. You can learn grammar rules, practice with interactive exercises, and receive explanations and feedback from your AI tutor to reinforce your learning.',
         faq_type: 'Features',
     },
     {
-        faq_id: 7,
         faq_title:
             'Can I practice listening and comprehension skills with the app?',
         faq_body:
@@ -60,91 +53,78 @@ const defaultFAQs = [
         faq_type: 'Features',
     },
     {
-        faq_id: 8,
         faq_title: 'Are there any resources for vocabulary building?',
         faq_body:
             'Certainly! The app provides various resources for vocabulary building. You can access word lists, contextual examples, interactive exercises, and vocabulary quizzes to expand your vocabulary.',
         faq_type: 'Features',
     },
     {
-        faq_id: 9,
         faq_title: 'Is there a pronunciation guide or exercises in the app?',
         faq_body:
             'Yes, the app includes a pronunciation guide and exercises to help you improve your pronunciation. You can speak to your AI tutor, read texts, and receive feedback on your pronunciation accuracy.',
         faq_type: 'Features',
     },
     {
-        faq_id: 10,
         faq_title: 'Can I learn English at my own pace with the app?',
         faq_body:
             'Absolutely! The app is designed to allow you to learn English at your own pace. You can access the lessons and exercises whenever and wherever you want and progress through the content at a speed that suits you best.',
         faq_type: 'Features',
     },
     {
-        faq_id: 11,
         faq_title: 'Is the app available offline?',
         faq_body:
             'No, the app offers only online mode, allowing you to download lessons, exercises, and engage in real-time conversation with AI tutor.',
         faq_type: 'Features',
     },
     {
-        faq_id: 12,
         faq_title: 'Is there a free trial version of the app? ',
         faq_body:
             "Yes, we offer a free trial that allows you to explore the app's features and access the content. This trial period gives you a chance to experience the app's benefits before deciding to subscribe.",
         faq_type: 'Free Trial',
     },
     {
-        faq_id: 13,
         faq_title: 'How much does the subscription to the app cost?',
         faq_body:
             'The subscription cost varies depending on the plan you choose. We offer different subscription tiers at different price points to accommodate various budgets and preferences. Tap SUBSCRIPTION to see our subscription plans.',
         faq_type: 'Subscriptions',
     },
     {
-        faq_id: 14,
         faq_title: 'What is included in the subscription?',
         faq_body:
             'The subscription includes access to all premium features and content within the app. This typically includes interactive lessons, conversation practice, grammar exercises, vocabulary resources, listening activities, progress tracking, proficiency tests, and more.',
         faq_type: 'Subscriptions',
     },
     {
-        faq_id: 15,
         faq_title: 'How long does the subscription last?',
         faq_body:
             'The duration of the subscription depends on the plan you select. You can choose the subscription plan that suits you best.',
         faq_type: 'Subscriptions',
     },
     {
-        faq_id: 16,
         faq_title: 'Is the subscription auto-renewed?',
         faq_body:
             "Yes, by default, the subscription is set to auto-renew at the end of each billing cycle. This ensures uninterrupted access to the app's features and content. However, you can manage your subscription settings and disable auto-renewal if desired.",
         faq_type: 'Subscriptions',
     },
     {
-        faq_id: 17,
         faq_title: 'Can I switch between subscription plans?',
         faq_body:
             'Yes, you can switch between different subscription plans. If you wish to upgrade or downgrade your plan, you can do so easily through your account settings. The changes will take effect from the next billing cycle.',
         faq_type: 'Subscriptions',
     },
     {
-        faq_id: 18,
         faq_title: 'Can I share my subscription with others?',
         faq_body:
             'The subscription is typically intended for individual use and is non-transferable. Each user will need their own subscription to access the premium features and content. Sharing your subscription with others is not permitted.',
         faq_type: 'Subscriptions',
     },
     {
-        faq_id: 19,
         faq_title: 'Is my subscription valid across multiple devices?',
         faq_body:
             'Yes, your subscription is usually valid across multiple devices. You can access the app and log in using your account on different devices, such as smartphones and tablets, as long as you use the same credentials. This allows you to learn and practice English seamlessly across your preferred devices.',
         faq_type: 'Subscriptions',
     },
     {
-        faq_id: 20,
         faq_title: 'What payment methods are accepted for the subscription?',
         faq_body:
             'We accept various payment methods, including credit cards, debit cards, bank transfers and PayPal payment platform. You can choose the payment method that is most convenient for you during the subscription process. Tap PAYMENT to visit payment page.',
@@ -152,21 +132,18 @@ const defaultFAQs = [
         custom: true,
     },
     {
-        faq_id: 21,
         faq_title: 'Can I cancel my subscription at any time?',
         faq_body:
             'Absolutely! You have the flexibility to cancel your subscription at any time. Once canceled, your access to premium features will continue until the end of the current billing period. After that, your subscription will not be renewed.',
         faq_type: 'Cancellation & Refund',
     },
     {
-        faq_id: 22,
         faq_title: 'Is there a refund policy for subscriptions?',
         faq_body:
             'We typically do not offer refunds for subscription payments. Once canceled, your access to premium features will continue until the end of the current billing period.',
         faq_type: 'Cancellation & Refund',
     },
     {
-        faq_id: 23,
         faq_title:
             'Are there any discounts or promotions available for subscriptions?',
         faq_body:
@@ -174,14 +151,12 @@ const defaultFAQs = [
         faq_type: 'Discounts & Promotions',
     },
     {
-        faq_id: 24,
         faq_title: 'Cannot download or start the app?',
         faq_body:
             'The app is available for both iOS and Android devices. You can download and use it on smartphones and tablets running iOS 12.4 or later and Android 8.0 or later.',
         faq_type: 'Troubleshooting',
     },
     {
-        faq_id: 25,
         faq_title:
             "I'm experiencing technical issues with the app. What should I do?",
         faq_body:
@@ -189,7 +164,6 @@ const defaultFAQs = [
         faq_type: 'Troubleshooting',
     },
     {
-        faq_id: 26,
         faq_title:
             'The app is not opening or crashing. How can I resolve this?',
         faq_body:
@@ -197,7 +171,6 @@ const defaultFAQs = [
         faq_type: 'Troubleshooting',
     },
     {
-        faq_id: 27,
         faq_title:
             "I'm having trouble logging into my account. What should I do?",
         faq_body:
@@ -205,7 +178,6 @@ const defaultFAQs = [
         faq_type: 'Troubleshooting',
     },
     {
-        faq_id: 28,
         faq_title:
             'The app is running slow. How can I improve its performance?',
         faq_body:
@@ -213,7 +185,6 @@ const defaultFAQs = [
         faq_type: 'Troubleshooting',
     },
     {
-        faq_id: 29,
         faq_title:
             "I'm not receiving notifications from the app. How can I fix this?",
         faq_body:
@@ -221,7 +192,6 @@ const defaultFAQs = [
         faq_type: 'Troubleshooting',
     },
     {
-        faq_id: 30,
         faq_title:
             'Some features or content in the app are not working properly. What should I do?',
         faq_body:
@@ -229,14 +199,12 @@ const defaultFAQs = [
         faq_type: 'Troubleshooting',
     },
     {
-        faq_id: 31,
         faq_title: 'I forgot my password. How can I reset it?',
         faq_body:
             'If you forgot your password, follow these steps to reset it:\n- On the login screen, click on the "Forgot password" or "Reset password" option.\n- You will receive instructions via email or SMS to reset your password.\n- Follow the provided instructions to create a new password.\n- If you don\'t receive the reset instructions, please check your spam or junk folder.\n- If the problem persists, contact our customer support for further assistance.',
         faq_type: 'Troubleshooting',
     },
     {
-        faq_id: 32,
         faq_title:
             "I'm encountering errors or error messages in the app. What do they mean, and how can I resolve them?",
         faq_body:
@@ -244,7 +212,6 @@ const defaultFAQs = [
         faq_type: 'Troubleshooting',
     },
     {
-        faq_id: 33,
         faq_title:
             "I'm experiencing connectivity issues with the app. What can I do to improve it?",
         faq_body:
@@ -252,7 +219,6 @@ const defaultFAQs = [
         faq_type: 'Troubleshooting',
     },
     {
-        faq_id: 34,
         faq_title:
             'I accidentally deleted my data or progress in the app. Can it be recovered?',
         faq_body:
@@ -260,7 +226,6 @@ const defaultFAQs = [
         faq_type: 'Troubleshooting',
     },
     {
-        faq_id: 35,
         faq_title:
             'The app is not recognizing my microphone or camera. What should I do to enable them?',
         faq_body:
@@ -268,7 +233,6 @@ const defaultFAQs = [
         faq_type: 'Troubleshooting',
     },
     {
-        faq_id: 36,
         faq_title:
             'I have a question or issue that is not addressed in the FAQ. How can I contact customer support?',
         faq_body:
@@ -279,7 +243,6 @@ const defaultFAQs = [
 
 const faqSchema = new mongoose.Schema(
     {
-        faq_id: { type: Number },
         faq_title: { type: String },
         faq_body: { type: String },
         faq_type: { type: String },

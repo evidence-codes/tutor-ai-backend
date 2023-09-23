@@ -99,7 +99,6 @@ const deleteAdmins = async (req, res) => {
 
         res.status(200).json({ message: 'Admins deleted!' });
     } catch (err) {
-        console.log(err, err?.message);
         res.status(500).json(err);
     }
 };
