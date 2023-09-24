@@ -1,5 +1,6 @@
 const Admin = require('../models/admin.model');
 const User = require('../models/user.model');
+const Review = require('../models/review.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {
@@ -10,6 +11,7 @@ const {
 const cloudinary = require('../config/cloudinary.config');
 const axios = require('axios');
 const ObjectId = require('mongodb').ObjectId;
+const pagination_indexer = require('../utils/Pagination_Indexer');
 
 const create = async (req, res) => {
     try {
@@ -37,7 +39,7 @@ const create = async (req, res) => {
         const savedAdmin = await admin.save();
         res.status(200).json(savedAdmin);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -69,7 +71,7 @@ const getAllAdmins = async (req, res) => {
         const adminInfo = await Admin.find();
         res.status(200).json({ adminInfo });
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -85,7 +87,7 @@ const toggleAdminStatus = async (req, res) => {
         });
         res.status(200).json({ message: 'Updated!' });
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -99,28 +101,46 @@ const deleteAdmins = async (req, res) => {
 
         res.status(200).json({ message: 'Admins deleted!' });
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
-const noOfUser = async (req, res) => {
+const getAllDashboardInfo = async (req, res) => {
     try {
-        const user = await User.find();
-        const noOfUsers = Object.keys(user).length;
-        res.status(200).json({ data: noOfUsers });
+        const noOfUsers = await User.countDocuments();
+        const noOfSubscribers = await User.countDocuments({
+            payment: { $gt: 0 },
+        });
+        const noOfAdmins = await Admin.countDocuments();
+        const recentReviews = await Review.find()
+            .sort({ createdAt: -1 })
+            .limit(5);
+
+        res.status(200).json({
+            noOfUsers,
+            noOfSubscribers,
+            noOfAdmins,
+            recentReviews,
+        });
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
-const subscribedUsers = async (req, res) => {
+const getAllReviews = async (req, res) => {
     try {
-        const users = await User.find({ payment: { $gt: 0 } });
-        // || await User.find().where('payment').gt(0).exec()
-        const noOfSUbscribedUsers = Object.keys(users).length;
-        res.status(200).json({ no_of_subscribed_users: noOfSUbscribedUsers });
+        const pagination_index = req.query.pagination_index;
+        const query_f_i = pagination_indexer(pagination_index, 50)?.first_index;
+        const query_l_i = pagination_indexer(pagination_index, 50)?.last_index;
+
+        const reviews = await Review.find()
+            .sort({ createdAt: -1 })
+            .skip(query_f_i)
+            .limit(query_l_i);
+
+        res.status(200).json(reviews);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -130,7 +150,7 @@ const getAllUsers = async (req, res) => {
 
         res.status(200).json(users);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -139,7 +159,7 @@ const newSignup = async (req, res) => {
         const users = await User.find({ payment: 0 });
         res.status(200).json(users);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -148,7 +168,7 @@ const subscribers = async (req, res) => {
         const subscribers = await User.find().where('payment').gt(0).exec();
         res.status(200).json(subscribers);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -166,7 +186,7 @@ const invoice = async (req, res) => {
         );
         res.status(200).json(invoices.data);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 
@@ -191,8 +211,6 @@ const getAccessToken = async () => {
 module.exports = {
     create,
     login,
-    noOfUser,
-    subscribedUsers,
     getAllUsers,
     newSignup,
     subscribers,
@@ -200,4 +218,6 @@ module.exports = {
     getAllAdmins,
     toggleAdminStatus,
     deleteAdmins,
+    getAllDashboardInfo,
+    getAllReviews,
 };
