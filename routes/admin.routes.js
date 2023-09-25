@@ -2,7 +2,7 @@ const router = require('express').Router();
 const {
     create,
     login,
-    getAllUsers,
+    getAUser,
     newSignup,
     subscribers,
     invoice,
@@ -11,6 +11,8 @@ const {
     deleteAdmins,
     getAllDashboardInfo,
     getAllReviews,
+    changePassword,
+    unSubscribers,
 } = require('../controllers/admin.controller');
 const auth = require('../middlewares/auth.middleware');
 
@@ -28,12 +30,16 @@ router.get('/get-dashb-info', auth, getAllDashboardInfo);
 
 router.get('/get-all-reviews', auth, getAllReviews);
 
-router.get('/get-all-users', getAllUsers);
+router.patch('/change-pwd', auth, changePassword);
 
-router.get('/new-signup', newSignup);
+router.get('/get-all-subscribers', auth, subscribers);
 
-router.get('/subscribers', subscribers);
+router.get('/new-signups', auth, newSignup);
 
-router.get('/get-invoice-data', invoice);
+router.get('/get-a-user', auth, getAUser);
+
+router.get('/get-all-unsubscribers', auth, unSubscribers);
+
+router.get('/get-invoice-data', auth, invoice);
 
 module.exports = router;

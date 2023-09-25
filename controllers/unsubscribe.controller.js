@@ -9,10 +9,14 @@ const send_unsubscribe_reason = async (req, res) => {
         if (!user) throw new ResourceNotFound('User does not exist');
 
         const unsubscribe = new Unsubscribe({
-            fullname: user.fullname,
-            email: user.email,
-            mobile: user.mobile,
+            ...user,
             reason: reason,
+            password: '',
+            parental_control: '1 1 1 1',
+            dp: {
+                public_id: '',
+                url: '',
+            },
         });
 
         await unsubscribe.save();
