@@ -12,6 +12,7 @@ const {
     getAllDashboardInfo,
     getAllReviews,
 } = require('../controllers/admin.controller');
+const { statistics } = require('../controllers/statistics.controller');
 const auth = require('../middlewares/auth.middleware');
 
 router.post('/create-admin', auth, create);
@@ -35,5 +36,7 @@ router.get('/new-signup', newSignup);
 router.get('/subscribers', subscribers);
 
 router.get('/get-invoice-data', invoice);
+
+router.get('/statistics', statistics)
 
 module.exports = router;
