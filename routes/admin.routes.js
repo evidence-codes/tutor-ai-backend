@@ -14,6 +14,7 @@ const {
     changePassword,
     unSubscribers,
 } = require('../controllers/admin.controller');
+const { statistics } = require('../controllers/statistics.controller');
 const auth = require('../middlewares/auth.middleware');
 
 router.post('/create-admin', auth, create);
@@ -41,5 +42,7 @@ router.get('/get-a-user', auth, getAUser);
 router.get('/get-all-unsubscribers', auth, unSubscribers);
 
 router.get('/get-invoice-data', auth, invoice);
+
+router.get('/statistics', statistics)
 
 module.exports = router;
