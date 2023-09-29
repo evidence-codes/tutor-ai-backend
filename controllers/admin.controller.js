@@ -201,7 +201,7 @@ const sendInvoice = async (req, res) => {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
-                    'PayPal-Request-Id': `${process.env}`
+                    'PayPal-Request-Id': `${process.env.PAYPAL_REQUEST_ID}`
                 }
             }
         );
