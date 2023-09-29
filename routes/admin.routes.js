@@ -5,7 +5,8 @@ const {
     getAllUsers,
     newSignup,
     subscribers,
-    invoice,
+    listInvoice,
+    sendInvoice,
     getAllAdmins,
     toggleAdminStatus,
     deleteAdmins,
@@ -35,7 +36,9 @@ router.get('/new-signup', newSignup);
 
 router.get('/subscribers', subscribers);
 
-router.get('/get-invoice-data', invoice);
+router.get('/get-invoice-data', listInvoice);
+
+router.post('/send-invoice', sendInvoice)
 
 router.get('/statistics', statistics)
 
