@@ -12,6 +12,7 @@ const cloudinary = require('../config/cloudinary.config');
 const axios = require('axios');
 const ObjectId = require('mongodb').ObjectId;
 const pagination_indexer = require('../utils/Pagination_Indexer');
+const { application } = require('express');
 
 const create = async (req, res) => {
     try {
@@ -172,14 +173,14 @@ const subscribers = async (req, res) => {
     }
 };
 
-const invoice = async (req, res) => {
+const listInvoice = async (req, res) => {
     const accessToken = await getAccessToken();
     try {
         const invoices = await axios.get(
             'https://api-m.sandbox.paypal.com/v2/invoicing/invoices?total_required=true',
             {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
                 },
             },
@@ -187,6 +188,26 @@ const invoice = async (req, res) => {
         res.status(200).json(invoices.data);
     } catch (err) {
         res.status(500).json(err?.message || 'An Error Occured!');
+    }
+};
+
+const sendInvoice = async (req, res) => {
+    const { invoice_id } = req.body;
+    const accessToken = await getAccessToken();
+    try {
+        const sent = await axios.post(
+            `https://api-m.sandbox.paypal.com/v2/invoicing/invoices/${invoice_id}/send`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                    'PayPal-Request-Id': `${process.env}`
+                }
+            }
+        );
+        res.status(200).json(sent.data);
+    } catch (err) {
+        res.status(500).json(err?.message);
     }
 };
 
@@ -214,7 +235,8 @@ module.exports = {
     getAllUsers,
     newSignup,
     subscribers,
-    invoice,
+    listInvoice,
+    sendInvoice,
     getAllAdmins,
     toggleAdminStatus,
     deleteAdmins,
