@@ -13,6 +13,13 @@ const {
     getAllReviews,
     changePassword,
     unSubscribers,
+    updateALesson,
+    addALesson,
+    deleteALesson,
+    deleteUsers,
+    createSubscription,
+    updateSubscription,
+    deleteSubscriptions,
 } = require('../controllers/admin.controller');
 const { statistics } = require('../controllers/statistics.controller');
 const auth = require('../middlewares/auth.middleware');
@@ -41,8 +48,22 @@ router.get('/get-a-user', auth, getAUser);
 
 router.get('/get-all-unsubscribers', auth, unSubscribers);
 
+router.patch('/update-a-lesson', auth, updateALesson);
+
+router.post('/add-a-lesson', auth, addALesson);
+
+router.patch('/delete-a-lesson', auth, deleteALesson);
+
+router.patch('/delete-users', auth, deleteUsers);
+
+router.post('/create-subscription', auth, createSubscription);
+
+router.patch('/update-subscription', auth, updateSubscription);
+
+router.patch('/delete-subscriptions', auth, deleteSubscriptions);
+
 router.get('/get-invoice-data', auth, invoice);
 
-router.get('/statistics', statistics)
+router.get('/statistics', auth, statistics);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 const { ResourceNotFound, Forbidden } = require('../errors/httpErrors');
-const { AdminVar, defaultAdminVarData } = require('../models/admin_var.model');
+const { AdminVar } = require('../models/admin_var.model');
 
 const setAdminVariables = async (req, res) => {
     try {

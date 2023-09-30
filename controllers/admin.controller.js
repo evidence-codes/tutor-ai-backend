@@ -13,6 +13,8 @@ const cloudinary = require('../config/cloudinary.config');
 const axios = require('axios');
 const ObjectId = require('mongodb').ObjectId;
 const pagination_indexer = require('../utils/Pagination_Indexer');
+const { LessonTopic } = require('../models/lesson_topics.model');
+const { Pricing } = require('../models/pricing.model');
 
 const create = async (req, res) => {
     try {
@@ -449,6 +451,10 @@ const subscribers = async (req, res) => {
                             payment: 1,
                             level: 1,
                             createdAt: 1,
+                            mobile: 1,
+                            study_target: 1,
+                            dateOfBirth: 1,
+                            language: 1,
                         },
                     },
                 ]).sort({ createdAt: -1 });
@@ -535,10 +541,15 @@ const unSubscribers = async (req, res) => {
                             __v: 1,
                             _id: 1,
                             fullname: 1,
-                            mobile: 1,
                             email: 1,
-                            reason: 1,
+                            payment: 1,
+                            level: 1,
                             createdAt: 1,
+                            mobile: 1,
+                            study_target: 1,
+                            dateOfBirth: 1,
+                            language: 1,
+                            reason: 1,
                         },
                     },
                 ]).sort({ createdAt: -1 });
@@ -599,11 +610,15 @@ const unSubscribers = async (req, res) => {
                             __v: 1,
                             _id: 1,
                             fullname: 1,
-                            mobile: 1,
                             email: 1,
-                            reason: 1,
+                            payment: 1,
+                            level: 1,
                             createdAt: 1,
-                            updatedAt: 1,
+                            mobile: 1,
+                            study_target: 1,
+                            dateOfBirth: 1,
+                            language: 1,
+                            reason: 1,
                         },
                     },
                 ]).sort({ createdAt: -1 });
@@ -653,11 +668,87 @@ const unSubscribers = async (req, res) => {
 const getAUser = async (req, res) => {
     try {
         const user_id = req.query.uid;
-
-        const user = await User.find(user_id);
+        const user = await User.findById(user_id);
         if (!user) throw new ResourceNotFound('User not found!');
 
         res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json(err?.message || 'An Error Occured!');
+    }
+};
+
+const deleteUsers = async (req, res) => {
+    try {
+        const users = req.body.users;
+        const is_unsub = req.body.is_unsub || false;
+        if (users?.length <= 0) throw new Forbidden('Users List Empty!');
+        const objectIdsToDelete = users.map(id => new ObjectId(id));
+        if (is_unsub) {
+            await Unsubscribe.deleteMany({ _id: { $in: objectIdsToDelete } });
+        } else {
+            await User.deleteMany({ _id: { $in: objectIdsToDelete } });
+        }
+
+        res.status(200).json({ message: 'Deleted successfully!' });
+    } catch (err) {
+        res.status(500).json(err?.message || 'An Error Occured!');
+    }
+};
+
+const addALesson = async (req, res) => {
+    try {
+        const lesson_id = req.body.lesson_id;
+        const lesson_index = req.body.lesson_index;
+        const topic = req.body.topic;
+        const sub_topic = req.body.subtopic;
+
+        const lesson = await LessonTopic.find({ lesson_id: lesson_id });
+        if (lesson?.length > 0)
+            throw new ResourceNotFound('Lesson ID already used!');
+
+        const new_lesson = new LessonTopic({
+            lesson_id: lesson_id,
+            lesson_index: lesson_index,
+            lesson_topic: topic,
+            lesson_sub_topic: sub_topic,
+        });
+
+        const lesson_data = await new_lesson.save();
+
+        res.status(200).json(lesson_data);
+    } catch (err) {
+        res.status(500).json(err?.message || 'An Error Occured!');
+    }
+};
+
+const updateALesson = async (req, res) => {
+    try {
+        const l_id = req.body.l_id;
+        const topic = req.body.topic;
+        const sub_topic = req.body.subtopic;
+
+        const lesson = await LessonTopic.findById(l_id);
+        if (!lesson) throw new ResourceNotFound('Lesson not found!');
+
+        lesson.lesson_topic = topic;
+        lesson.lesson_sub_topic = sub_topic;
+
+        await lesson.save();
+
+        res.status(200).json({ message: 'Updated successfully!' });
+    } catch (err) {
+        res.status(500).json(err?.message || 'An Error Occured!');
+    }
+};
+
+const deleteALesson = async (req, res) => {
+    try {
+        const l_id = req.body.l_id;
+        const lesson = await LessonTopic.findById(l_id);
+        if (!lesson) throw new ResourceNotFound('Lesson not found!');
+        await lesson.deleteOne();
+
+        res.status(200).json({ message: 'Deleted successfully!' });
     } catch (err) {
         res.status(500).json(err?.message || 'An Error Occured!');
     }
@@ -699,6 +790,76 @@ const getAccessToken = async () => {
     return response.data.access_token;
 };
 
+const createSubscription = async (req, res) => {
+    try {
+        const id = req.body.id;
+        const no_of_lessons = req.body.no_of_lessons;
+        const price = req.body.price;
+        const plan = req.body.plan;
+        const thirty_mins = req.body.thirty_mins;
+        const discount = req.body.discount;
+
+        const pricing = await Pricing.find({ id: id });
+        if (pricing?.length > 0)
+            throw new ResourceNotFound('Pricing ID already used!');
+        const new_subscription = new Pricing({
+            id: id,
+            no_of_lessons: no_of_lessons,
+            price: price,
+            plan: plan,
+            thirty_mins: thirty_mins,
+            discount: discount,
+        });
+        const sub_data = await new_subscription.save();
+
+        res.status(200).json(sub_data);
+    } catch (err) {
+        res.status(500).json(err?.message || 'An Error Occured!');
+    }
+};
+
+const updateSubscription = async (req, res) => {
+    try {
+        const sub_id = req.body.sub_id;
+        const id = req.body.id;
+        const no_of_lessons = req.body.no_of_lessons;
+        const price = req.body.price;
+        const plan = req.body.plan;
+        const thirty_mins = req.body.thirty_mins;
+        const discount = req.body.discount;
+
+        const pricing = await Pricing.findById(sub_id);
+        if (!pricing)
+            throw new ResourceNotFound('Subscription ID does not exist!');
+
+        pricing.id = id;
+        pricing.no_of_lessons = no_of_lessons;
+        pricing.price = price;
+        pricing.plan = plan;
+        pricing.thirty_mins = thirty_mins;
+        pricing.discount = discount;
+
+        await pricing.save();
+
+        res.status(200).json({ message: 'Updated successfully!' });
+    } catch (err) {
+        res.status(500).json(err?.message || 'An Error Occured!');
+    }
+};
+
+const deleteSubscriptions = async (req, res) => {
+    try {
+        const subs = req.body.subs;
+        if (subs?.length <= 0) throw new Forbidden('Subscription List Empty!');
+        const objectIdsToDelete = subs.map(id => new ObjectId(id));
+        await Pricing.deleteMany({ _id: { $in: objectIdsToDelete } });
+
+        res.status(200).json({ message: 'Deleted successfully!' });
+    } catch (err) {
+        res.status(500).json(err?.message || 'An Error Occured!');
+    }
+};
+
 module.exports = {
     create,
     login,
@@ -713,4 +874,11 @@ module.exports = {
     getAllReviews,
     changePassword,
     unSubscribers,
+    updateALesson,
+    addALesson,
+    deleteALesson,
+    deleteUsers,
+    createSubscription,
+    updateSubscription,
+    deleteSubscriptions,
 };
