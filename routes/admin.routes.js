@@ -5,7 +5,8 @@ const {
     getAUser,
     newSignup,
     subscribers,
-    invoice,
+    listInvoice,
+    sendInvoice,
     getAllAdmins,
     toggleAdminStatus,
     deleteAdmins,
@@ -44,7 +45,13 @@ router.get('/get-all-subscribers', auth, subscribers);
 
 router.get('/new-signups', auth, newSignup);
 
-router.get('/get-a-user', auth, getAUser);
+
+
+
+router.get('/get-invoice-data', listInvoice);
+
+router.post('/send-invoice', sendInvoice)
+
 
 router.get('/get-all-unsubscribers', auth, unSubscribers);
 
@@ -65,5 +72,7 @@ router.patch('/delete-subscriptions', auth, deleteSubscriptions);
 router.get('/get-invoice-data', auth, invoice);
 
 router.get('/statistics', auth, statistics);
+
+router.get('/get-a-user', auth, getAUser);
 
 module.exports = router;
