@@ -66,7 +66,7 @@ const deleteFAQs = async (req, res) => {
 
         res.status(200).json({ message: 'FAQs deleted!' });
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
 

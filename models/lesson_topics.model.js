@@ -116,7 +116,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 201,
-        lesson_index: 1,
+        lesson_index: 11,
         lesson_topic: 'Adjectives and Adverbs',
         lesson_sub_topic: [
             'Adjectives vs adverbs, word formation, word order i.e. quick vs quickly, sudden vs suddenly, bad vs badly.',
@@ -129,7 +129,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 202,
-        lesson_index: 2,
+        lesson_index: 12,
         lesson_topic: 'Articles and Quantifiers',
         lesson_sub_topic: [
             'A, An, The, 0 article i.e. a book, an orange, the book, the students, students, etc.',
@@ -138,7 +138,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 203,
-        lesson_index: 3,
+        lesson_index: 13,
         lesson_topic: 'Conditionals',
         lesson_sub_topic: [
             'Zero conditional i.e. Take medicine if you feel ill.',
@@ -149,7 +149,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 204,
-        lesson_index: 4,
+        lesson_index: 14,
         lesson_topic: 'Conjunctions',
         lesson_sub_topic: [
             'where, when, whose, why, whose, who, that',
@@ -158,7 +158,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 205,
-        lesson_index: 5,
+        lesson_index: 15,
         lesson_topic: 'Future Tenses',
         lesson_sub_topic: [
             'Future with will: sudden decision i.e. I will show you how to use the new laptop.',
@@ -171,7 +171,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 206,
-        lesson_index: 6,
+        lesson_index: 16,
         lesson_topic: 'Gerund and Infinitive',
         lesson_sub_topic: [
             'Verbs followed by infinitive or gerund i.e. want, plan, decide, try, hope, expect, offer, forget, need, promise, refuse, learn, etc.',
@@ -180,7 +180,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 207,
-        lesson_index: 7,
+        lesson_index: 17,
         lesson_topic: 'Modal Verbs',
         lesson_sub_topic: [
             'Can or can’t for abilities i.e. I can play tennis. I can’t speak Spanish.',
@@ -200,7 +200,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 208,
-        lesson_index: 8,
+        lesson_index: 18,
         lesson_topic: 'Past Tenses',
         lesson_sub_topic: [
             'Past simple: actions in the past i.e. I worked last night. I didn’t work. Did you work?',
@@ -213,7 +213,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 209,
-        lesson_index: 9,
+        lesson_index: 19,
         lesson_topic: 'Prepositions',
         lesson_sub_topic: [
             'Prepositions of place: at, in on, in front of, under, behind, among, beside, near, next to, between, across, into, through, onto, out of, etc.',
@@ -224,7 +224,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 210,
-        lesson_index: 10,
+        lesson_index: 20,
         lesson_topic: 'Present Tenses',
         lesson_sub_topic: [
             'TO BE, i.e. I am, You are, He is, She is, It is, We are, You are, They are',
@@ -244,7 +244,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 211,
-        lesson_index: 11,
+        lesson_index: 21,
         lesson_topic: 'Pronouns',
         lesson_sub_topic: [
             'Personal pronouns: I, he, she, he, it, we you, they',
@@ -258,7 +258,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 301,
-        lesson_index: 1,
+        lesson_index: 22,
         lesson_topic: 'Adjectives and Adverbs',
         lesson_sub_topic: [
             'Adjectives with -ed vs -ing, i.e. boring vs bored, tiring vs tired, shocking vs shocked etc.',
@@ -272,7 +272,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 302,
-        lesson_index: 2,
+        lesson_index: 23,
         lesson_topic: 'Conditionals',
         lesson_sub_topic: [
             '0 conditional i.e. If people eat too much, they get fat quickly.',
@@ -283,7 +283,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 303,
-        lesson_index: 3,
+        lesson_index: 24,
         lesson_topic: 'Conjunctions',
         lesson_sub_topic: [
             'Connecting words expressing cause and effect and contrast: so, which, until, why, while, when, as, before, after, until, as long as, whenever, etc.',
@@ -291,7 +291,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 304,
-        lesson_index: 4,
+        lesson_index: 25,
         lesson_topic: 'Future Tenses',
         lesson_sub_topic: [
             'Will – sudden decisions i.e. I will phone tomorrow. I will carry it for you.',
@@ -302,7 +302,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 305,
-        lesson_index: 5,
+        lesson_index: 26,
         lesson_topic: 'Gerund and Infinitive',
         lesson_sub_topic: [
             'Verbs followed by infinitive i.e. want, hope, need, plan, expect, promise, decide, offer, refuse, try, forget, learn, would like, etc.',
@@ -313,7 +313,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 306,
-        lesson_index: 6,
+        lesson_index: 27,
         lesson_topic: 'Modal Verbs',
         lesson_sub_topic: [
             'may, might for probability i.e. I might go to the cinema. It may be late now.',
@@ -337,7 +337,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 307,
-        lesson_index: 7,
+        lesson_index: 28,
         lesson_topic: 'Past Tenses',
         lesson_sub_topic: [
             'Past simple i.e  I was tired last night. We enjoyed the party.',
@@ -352,7 +352,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 308,
-        lesson_index: 8,
+        lesson_index: 29,
         lesson_topic: 'Prepositions',
         lesson_sub_topic: [
             'Prepositional phrases with in, for, from, to, at, to, in, about, with, from, of',
@@ -361,7 +361,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 309,
-        lesson_index: 9,
+        lesson_index: 30,
         lesson_topic: 'Present Tenses',
         lesson_sub_topic: [
             'Present simple i.e. I come from Greece. I work late on Tuesdays.',
@@ -377,7 +377,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 310,
-        lesson_index: 10,
+        lesson_index: 31,
         lesson_topic: 'Pronouns',
         lesson_sub_topic: [
             'Pronouns: something, anything, nothing',
@@ -386,7 +386,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 401,
-        lesson_index: 1,
+        lesson_index: 32,
         lesson_topic: 'Adjectives and Adverbs',
         lesson_sub_topic: [
             'Adjectives with -ed vs -ing i.e. I am interested in your offer. Your offer is interesting.',
@@ -400,7 +400,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 402,
-        lesson_index: 2,
+        lesson_index: 33,
         lesson_topic: 'Conditionals',
         lesson_sub_topic: [
             '0 conditional i.e. If you are happy, clap your hands.',
@@ -413,7 +413,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 403,
-        lesson_index: 3,
+        lesson_index: 34,
         lesson_topic: 'Future Tenses',
         lesson_sub_topic: [
             'Will i.e. I am sure she will win the race. I will call you tomorrow.',
@@ -429,7 +429,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 404,
-        lesson_index: 4,
+        lesson_index: 35,
         lesson_topic: 'Gerund and Infinitive',
         lesson_sub_topic: [
             'Forming nouns from verbs using – ing i.e. swim – swimming, play – playing',
@@ -441,7 +441,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 405,
-        lesson_index: 5,
+        lesson_index: 36,
         lesson_topic: 'Modal Verbs',
         lesson_sub_topic: [
             'may, might for probability i.e. It might rain.',
@@ -475,7 +475,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 406,
-        lesson_index: 6,
+        lesson_index: 37,
         lesson_topic: 'Past Tenses',
         lesson_sub_topic: [
             'Past simple i.e. They watched TV all evening. It began to rain soon after dinner. I didn’t see Jane all evening. Did you meet your friend?',
@@ -493,7 +493,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 407,
-        lesson_index: 7,
+        lesson_index: 38,
         lesson_topic: 'Prepositions',
         lesson_sub_topic: [
             'Prepositional phrases with in, for, from, to, at, to, in, about, with, from, of, etc.',
@@ -502,7 +502,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 408,
-        lesson_index: 8,
+        lesson_index: 39,
         lesson_topic: 'Present Tenses',
         lesson_sub_topic: [
             'Present simple i.e. Mark usually plays football on Sundays.',
@@ -521,7 +521,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 409,
-        lesson_index: 9,
+        lesson_index: 40,
         lesson_topic: 'Pronouns',
         lesson_sub_topic: [
             'Pronouns: something, anything, someone, anyone, something, anything, somewhere, anywhere, etc.',
@@ -531,13 +531,13 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 501,
-        lesson_index: 1,
+        lesson_index: 41,
         lesson_topic: 'Adjectives and Adverbs',
         lesson_sub_topic: ['All forms', 'Inversion with negative adverbials'],
     },
     {
         lesson_id: 502,
-        lesson_index: 2,
+        lesson_index: 42,
         lesson_topic: 'Modal Verbs',
         lesson_sub_topic: [
             'Modals in the past i.e.  could have done, may have seen, should have done, could have found',
@@ -545,7 +545,7 @@ const defaultLessonTopics = [
     },
     {
         lesson_id: 503,
-        lesson_index: 3,
+        lesson_index: 43,
         lesson_topic: 'Conditionals',
         lesson_sub_topic: [
             'All forms',
