@@ -13,9 +13,6 @@ const cloudinary = require('../config/cloudinary.config');
 const axios = require('axios');
 const ObjectId = require('mongodb').ObjectId;
 const pagination_indexer = require('../utils/Pagination_Indexer');
-
-
-
 const { application } = require('express');
 const { LessonTopic } = require('../models/lesson_topics.model');
 const { Pricing } = require('../models/pricing.model');
@@ -765,7 +762,7 @@ const listInvoice = async (req, res) => {
             'https://api-m.sandbox.paypal.com/v2/invoicing/invoices?total_required=true',
             {
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
                 },
             },
@@ -784,11 +781,11 @@ const sendInvoice = async (req, res) => {
             `https://api-m.sandbox.paypal.com/v2/invoicing/invoices/${invoice_id}/send`,
             {
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
-                    'PayPal-Request-Id': `${process.env.PAYPAL_REQUEST_ID}`
-                }
-            }
+                    'PayPal-Request-Id': `${process.env.PAYPAL_REQUEST_ID}`,
+                },
+            },
         );
         res.status(200).json(sent.data);
     } catch (err) {

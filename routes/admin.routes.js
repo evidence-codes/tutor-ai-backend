@@ -45,13 +45,9 @@ router.get('/get-all-subscribers', auth, subscribers);
 
 router.get('/new-signups', auth, newSignup);
 
-
-
-
 router.get('/get-invoice-data', listInvoice);
 
-router.post('/send-invoice', sendInvoice)
-
+router.post('/send-invoice', sendInvoice);
 
 router.get('/get-all-unsubscribers', auth, unSubscribers);
 
@@ -68,8 +64,6 @@ router.post('/create-subscription', auth, createSubscription);
 router.patch('/update-subscription', auth, updateSubscription);
 
 router.patch('/delete-subscriptions', auth, deleteSubscriptions);
-
-router.get('/get-invoice-data', auth, invoice);
 
 router.get('/statistics', auth, statistics);
 
