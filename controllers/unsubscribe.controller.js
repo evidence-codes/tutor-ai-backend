@@ -8,6 +8,7 @@ const send_unsubscribe_reason = async (req, res) => {
         const user = await User.findById(req.user.id);
         if (!user) throw new ResourceNotFound('User does not exist');
 
+        console.log(user);
         const unsubscribe = new Unsubscribe({
             ...user,
             reason: reason,
@@ -22,6 +23,7 @@ const send_unsubscribe_reason = async (req, res) => {
         await unsubscribe.save();
         res.status(200).json('Reason uploaded successfully!');
     } catch (err) {
+        console.log(err);
         res.status(500).json(err?.message || 'An Error Occured!');
     }
 };
