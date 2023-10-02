@@ -41,20 +41,20 @@ app.use('/images', express.static('images'));
 
 const server = http.createServer(app);
 
-app.use('/api/auth', auth);
-app.use('/api/auth/token', token);
-app.use('/api/user', user);
-app.use('/api/chat', chat);
-app.use('/api/payment', payment);
-app.use('/api/lesson', lesson);
-app.use('/api/admin-vars', admin_var);
-app.use('/api/review', review);
-app.use('/api/unsubscribe', unsubscribe);
-app.use('/api/pretest', pretest);
-app.use('/api/admin', admin);
-app.use('/api/pricing', pricing);
-app.use('/api/faq', faq);
-app.use('/api/lesson-topic', lesson_topic);
+// app.use('/api/auth', auth);
+// app.use('/api/auth/token', token);
+// app.use('/api/user', user);
+// app.use('/api/chat', chat);
+// app.use('/api/payment', payment);
+// app.use('/api/lesson', lesson);
+// app.use('/api/admin-vars', admin_var);
+// app.use('/api/review', review);
+// app.use('/api/unsubscribe', unsubscribe);
+// app.use('/api/pretest', pretest);
+// app.use('/api/admin', admin);
+// app.use('/api/pricing', pricing);
+// app.use('/api/faq', faq);
+// app.use('/api/lesson-topic', lesson_topic);
 
 app.use('/', (req, res) => {
     res.status(404).json(errorMiddlewares.formatError('Resource Not Found'));
